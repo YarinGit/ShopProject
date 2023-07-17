@@ -1,0 +1,62 @@
+/*
+0) לסדר את הבוקסים שיהיה יפה
+1)להשים אייקון בהדר  ובכל בוקס ששולח לשם
+2) לחקור באתר הרשמי של ריאקט על יוז קונטקסט
+3) אינטגרציה של פייפאל
+4) רספונסיביות
+
+5) כניסה והרשמה
+
+
+-----------------------------------
+
+1) ליצור קומפוננטה שמקושרת לפיירבייס אות של ריאקט 
+2) לייצר תהליך בדיקה בין הפיירסטור לבין פייר בייס אות 
+
+
+להמשיך את הסרטון מדקה 16:00   - זה למידה של איך ליצור עגלת קניות
+React Shopping Cart Ecommerce Beginner Website - Build & Deploy A React Beginner Project
+
+*/
+
+
+// קונטרול + שיפט + P ---- ואז
+// fold all regions - סוגר את כל הריגנים
+// unfold all regions - פותח את כל הריגנים
+
+// C:\Windows\System32\cmd.exe
+// C:\oferSheliCourse\zoomOper\22-2-23--oferWork
+
+
+
+
+
+
+/* firebase
+
+npm install firebase
+Then, initialize Firebase and begin using the SDKs for the products you'd like to use.
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAZ1kpZDYYLCLTK3N6ZWO1Bq7WYuTdMWZo",
+  authDomain: "electric-shop-a672b.firebaseapp.com",
+  projectId: "electric-shop-a672b",
+  storageBucket: "electric-shop-a672b.appspot.com",
+  messagingSenderId: "592888491455",
+  appId: "1:592888491455:web:943f98235ef66647e2850a",
+  measurementId: "G-V0QBEJZ5GW"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+*/

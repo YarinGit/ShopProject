@@ -1,0 +1,129 @@
+
+/* Product box container */
+.productBox {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  width: 23%;
+}
+.productBox .top {
+  height: 50%;
+  }
+.productBox .descriptionDiv {
+  height: 35%;
+  }
+  .productBox .buttom {
+  height: 10%;
+  display: flex;
+  flex-direction: column;
+  }
+.productBox:hover {
+  transform: scale(1.1,1.1);
+}
+/* Product image */
+.productBox img {
+  width: 200px;
+  min-height: 200px;
+  max-height: 230px;
+  margin-bottom: 10px;
+}
+
+/* Product title */
+.productBox .title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Product description */
+.productBox .description {
+  margin-top: 12px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #555;
+  text-align: center;
+}
+
+/* Product price */
+.productBox .price {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Product button */
+.productBox .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: lightblue;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.productBox .btn:hover {
+  background-color: darkblue;
+}
+
+
+
+
+
+
+
+/*
+
+
+* {
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.casing {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  width: 30%;
+  text-align: center;
+  border-radius: 20%;
+}
+
+.casing h1{
+  margin-bottom: 12px;
+}
+.casing img{
+  width: 100%;
+  flex-grow: 1;
+}
+.casing p{
+  margin-top: 30px;
+}
+
+.addToBasket{
+  float: left;
+}
+*/
+
+/*   
+  border: solid black 2px;
+  display: flex;
+  flex-wrap: wrap;
+width: 100%;
+margin: 12px auto; */
+
+
+  /* flex-direction: column; */

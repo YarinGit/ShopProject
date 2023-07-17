@@ -1,0 +1,11 @@
+/* Product box container */
+
+/* Product container */
+.productContainer {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap; /* Wrap items to next row */
+    justify-content: space-between; /* Adjust spacing between items */
+}
+  
+

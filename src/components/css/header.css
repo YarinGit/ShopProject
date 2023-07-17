@@ -1,0 +1,46 @@
+*{
+  box-sizing: border-box;
+}
+
+.container{
+    margin: 0 auto;
+    max-height:75px;
+}
+
+.container .roww{
+    display: flex;
+justify-content: space-around;
+background: lightblue;
+align-items: center;
+}
+
+.logo{
+    display: flex;
+    justify-content: space-between;
+    width: 65%;
+}
+
+.nav{
+width: 35%;
+  justify-content: space-around;
+}
+
+.header .nav ul{
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.header .nav ul a{
+  color:grey;
+  padding:0 18px;
+  text-decoration: none;
+}
+
+
+
+
+
+
+
