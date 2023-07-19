@@ -2,10 +2,7 @@ import React, { useState } from 'react'
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button,TextField, } from '@mui/material';
 
 const PopupLogIn = ({ open, onClose }) => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+  const [formData, setFormData] = useState({email: '',password: '',});
 
   const handlChange = (e) => {
     const { name, value } = e.target; // Correct destructuring
@@ -18,6 +15,7 @@ const PopupLogIn = ({ open, onClose }) => {
     // Close the popup after form submission
     
     onClose(formData);
+    setFormData({email: '',password: '',});
   };
 
   return (

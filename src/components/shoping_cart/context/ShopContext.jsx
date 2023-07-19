@@ -12,10 +12,9 @@ export const ShopContextProvider = (props) =>{
     }
     return cart;
   };
-  
   const productArr = useContext(productConext);
   const [cartItems, setCartItems] = useState(getDefaultCart(productArr));
-  console.log("cartItems - ", cartItems);
+  // console.log("cartItems - ", cartItems);
 
   const addToCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));

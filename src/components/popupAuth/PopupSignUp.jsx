@@ -16,6 +16,7 @@ const PopupSignUp = ({ open, onClose }) => {
     e.preventDefault();
     // Close the popup after form submission
     onClose(formData);
+    setFormData({email: '',password: '',});
   };
 
   return (

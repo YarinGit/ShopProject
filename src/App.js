@@ -27,9 +27,7 @@ function App() {
 useEffect(()=>{
   const getData = async ()=>{
   let {data} = await axios.get("https://fakestoreapi.com/products");
-  // let {products} = data;
-  console.log("data - ", data);
-  // products = arrangeID(products);
+  // console.log("data - ", data);
   setProductsArr(data);
 }
 getData();
@@ -56,19 +54,19 @@ getData();
     </div>
   );
 }
-const arrangeID=(array)=>{
-  let newArray = array.map((item, index)=>{
-    item = {...item, id:index+1}
-  return item;
-  } );
-  return newArray;
-}
 export default App;
 
 
 
-
 /*
+
+ const arrangeID=(array)=>{
+   let newArray = array.map((item, index)=>{
+     item = {...item, id:index+1}
+   return item;
+   } );
+   return newArray;
+ }
 first api
 
 useEffect(()=>{

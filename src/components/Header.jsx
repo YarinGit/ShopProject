@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { FaOpencart } from "react-icons/fa";
 import PopupSignUp from "./popupAuth/PopupSignUp";
 import PopupLogIn from "./popupAuth/PopupLogIn";
+import { signIn } from "../firebaseShop";
 
 const Header = () => {
   // Popup Log in 
@@ -16,7 +17,7 @@ const Header = () => {
     setIsPopupLogInOpen(true);
   }
   const handlePopupLogInClose = (logInData) => {
-    console.log('logInData', logInData);
+    signIn(logInData);
     
     // TODO: enter here connection to firebase
     

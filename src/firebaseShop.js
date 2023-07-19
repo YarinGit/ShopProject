@@ -8,7 +8,8 @@ import {
 
  import { 
   getAuth, 
-  
+  createUserWithEmailAndPassword,
+
  } from "firebase/auth";
 
 const firebaseConfig = {
@@ -42,7 +43,24 @@ getDocs(colRef)
 
   })
   .catch(error=>console.log(error.message))
+  }
+  
+  // Signing users up
 
+  export const signIn = (logInData)=>{
+    let {email, password} = logInData;
+    console.log("email - ", email);
+    console.log("password - ", password);
+    createUserWithEmailAndPassword(auth, email, password)
+    .then(cred=>{
+      console.log("cred = ", cred);
+      console.log("user created - ", cred.user);
+    })
+    .catch(error=>{console.log(error.message);})
 
   }
 
+
+
+
+        
