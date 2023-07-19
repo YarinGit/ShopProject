@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { auth } from "../firebase";
+import { auth } from "./firebase";
 import { collection, addDoc } from 'firebase/firestore';
 const DB = () => {
   

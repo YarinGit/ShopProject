@@ -26,8 +26,7 @@ const BoxProdact = ({ title, description, image, price, id }) => {
           onClick={(e) => {
             e.preventDefault();
             addToCart(id);
-          }}
-        >
+          }}>
           <a href="#">
             <TbShoppingCartPlus color="text-black-50" size={35} />
           </a>

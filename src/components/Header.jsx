@@ -1,41 +1,76 @@
-import React from "react";
+import React, { useState } from "react";
 import "./css/header.css";
 import { Link } from "react-router-dom";
-import {FaOpencart} from 'react-icons/fa'
+import { FaOpencart } from "react-icons/fa";
+import PopupSignUp from "./popupAuth/PopupSignUp";
+import PopupLogIn from "./popupAuth/PopupLogIn";
 
 const Header = () => {
+  // Popup Log in 
+  const [isPopupLogInOpen, setIsPopupLogInOpen] = useState(false);
+  const handlePopupLogInOpen = (logInData) => {
+    console.log('logInData', logInData);
+    
+    // TODO: enter here connection to firebase
+
+    setIsPopupLogInOpen(true);
+  }
+  const handlePopupLogInClose = (logInData) => {
+    console.log('logInData', logInData);
+    
+    // TODO: enter here connection to firebase
+    
+    setIsPopupLogInOpen(false);
+  };
+
+  // Popup Sign up 
+  const [isPopupSignUpOpen, setIsPopupSignUpOpen] = useState(false);
+  const handlePopupSignUpOpen = () => {
+    
+    setIsPopupSignUpOpen(true);
+  }
+  const handlePopupSignUpClose = (signUpData) => {
+    console.log("signUpData - ", signUpData);
+    console.log('email: in signUpData', signUpData.email);
+    console.log('password: in signUpData', signUpData.password);
+
+
+    setIsPopupSignUpOpen(false);
+  }
+  
   return (
     <div className="header">
-      <div >
+      <div>
         <div className="roww">
           <div className="logo">
-            <img src="../images/logoShop.png" alt="logoShop" />  
+            <img src="../images/logoShop.png" alt="logoShop" />
             <h1>Shop</h1>
           </div>
-          
+
           {/*//TODO: לתקןןןן   */}
 
-           <div className="nav">
-    <ul>
-      <li>
-        <Link to="/">Contact us</Link>
-      </li>
-      <li>
-        <Link to="/">Home</Link>
-      </li>
-      <li>
-        <Link to="/">sign up</Link>
-      </li>
-      <li>
-        <Link to="/">Log in</Link>
-      </li>
-      <li>
-      <Link to="/cart"> <FaOpencart size={35}/></Link>
-      </li>
-    </ul>
+          <div className="nav">
+            <ul>
+              <li>
+                <Link to="/">Contact us</Link>
+              </li>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link onClick={handlePopupSignUpOpen}>Sign up</Link>
+                <PopupSignUp open={isPopupSignUpOpen} onClose={handlePopupSignUpClose} />
 
-  </div> 
-
+              </li>
+              <li>
+                <Link onClick={handlePopupLogInOpen}>Log in</Link>
+                <PopupLogIn open={isPopupLogInOpen} onClose={handlePopupLogInClose} />
+              </li>
+              <li>
+                <Link to="/cart"><FaOpencart size={35} /></Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -43,4 +78,3 @@ const Header = () => {
 };
 
 export default Header;
-

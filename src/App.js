@@ -13,12 +13,16 @@ import Cart from "./components/shoping_cart/pages/cart/Cart";
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { ShopContextProvider } from "./components/shoping_cart/context/ShopContext";
-import Base from "./test/solveCartProblem/Base";
+import { getSnap } from "./firebaseShop";
 
 // api 1 - https://dummyjson.com/products/search?q=phone
 // api 2 - https://fakestoreapi.com/products
 export const productConext = createContext();
 function App() {
+
+  getSnap();
+
+  // ------------------------------------------------------------------------------------------------------------------------------------
   const [productsArr, setProductsArr] = useState([]);
 useEffect(()=>{
   const getData = async ()=>{
@@ -33,9 +37,6 @@ getData();
   
   return (
     <div className="container">
-      {/* <InputToFB/> */}
-      {/* <DB/>
-      <AddNewDocDB/> */}
 
       {/* ShopingCart in test folder */}
       {/* <CreateShopingCart/> */}
@@ -52,8 +53,6 @@ getData();
       </ShopContextProvider>
       </productConext.Provider> 
  
-      {/* <Header /> */}
-      {/* <Main /> */}
     </div>
   );
 }

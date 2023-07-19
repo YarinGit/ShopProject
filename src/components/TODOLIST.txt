@@ -17,6 +17,8 @@
 להמשיך את הסרטון מדקה 16:00   - זה למידה של איך ליצור עגלת קניות
 React Shopping Cart Ecommerce Beginner Website - Build & Deploy A React Beginner Project
 
+להמשיך סרטון 5 בפיירבייס 9 לגבי מסמכים בפיירבייס, המשכתי מפרק 9 של הרשמה
+
 */
 
 

@@ -5,7 +5,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth } from "./firebase";
 
 const InputToFB = () => {
   // let auth = getAuth();

@@ -1,6 +1,6 @@
 import { collection, getDocs } from 'firebase/firestore';
 import React, { useEffect, useRef, useState } from 'react'
-import { addFormNewDoc, collectionRef, db, deleteFormNewDoc, getCollectionData, signingUp } from '../firebase';
+import { addFormNewDoc, collectionRef, db, deleteFormNewDoc, getCollectionData, signingUp } from './firebase';
 import { useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { StrictMode } from 'react';
