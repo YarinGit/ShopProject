@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button,TextField, } from '@mui/material';
+import { Link } from 'react-router-dom';
+import PopupSignUp from './PopupSignUp';
 
-const PopupLogIn = ({ open, onClose }) => {
+const PopupLogIn = ({ open, onClose, forSignInPopup }) => {
+  let {handlePopupSignUpOpen, isPopupSignUpOpen, handlePopupSignUpClose} = forSignInPopup;
   const [formData, setFormData] = useState({email: '',password: '',});
 
   const handlChange = (e) => {
@@ -44,19 +47,26 @@ const PopupLogIn = ({ open, onClose }) => {
           type="text"
           fullWidth
           value={formData.password}
-          onChange={handlChange}
-        />
+          onChange={handlChange}/>
+            <div>
+    <label>alredy have an acount? </label>
+    <Link onClick={handlePopupSignUpOpen}>Sign up</Link>
+    <PopupSignUp open={isPopupSignUpOpen} onClose={handlePopupSignUpClose} />
+    </div>
+
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="primary">
+        <Button onClick={()=>{onClose({email:'', password:''})}} color="primary">
           Cancel
         </Button>
         <Button onClick={handleSubmit} variant="contained" color="primary">
           Submit
         </Button>
+
       </DialogActions>
     </Dialog>
     </form>
+    
     </div>
   )
 }

@@ -9,6 +9,7 @@ import {
  import { 
   getAuth, 
   createUserWithEmailAndPassword,
+  signOut,signInWithEmailAndPassword,
 
  } from "firebase/auth";
 
@@ -30,7 +31,7 @@ const firebaseConfig = {
   // collection ref
   const colRef = collection(db, "books")
 
-  // get collection data
+  //#region get collection data
 
   export const getSnap = ()=>{
 getDocs(colRef)
@@ -44,8 +45,9 @@ getDocs(colRef)
   })
   .catch(error=>console.log(error.message))
   }
+  //#endregion
   
-  // Signing users up
+  //#region Signing users up
 
   export const signIn = (logInData)=>{
     let {email, password} = logInData;
@@ -57,10 +59,32 @@ getDocs(colRef)
       console.log("user created - ", cred.user);
     })
     .catch(error=>{console.log(error.message);})
+  }
+//#endregion
 
+  //#region Logging in and out
+  export const signAndLogOut=()=>{
+    signOut(auth)
+    .then(()=>{
+      console.log("User sign out");
+    })
+    .catch(error=>{
+      console.log(error.message);
+    })
   }
 
+  export const logExistingUserByEmailAndPassword=(email, password)=>{
+    signInWithEmailAndPassword(auth, email, password)
+    .then(cred=>{
+      console.log("User logged in: ", cred.user);
+      return true;
+    })
+    .catch(error=>{
+      console.log(error.message);
+      return false;
+    })
+  }
 
-
+//#endregion
 
         
