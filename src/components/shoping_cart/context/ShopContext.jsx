@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 import { productConext } from "../../../App";
 
-// {1:0, 2:0,3:0,4:0}
+// {1:0,2:0,3:0,4:0}
 export const ShopContext = createContext(null);
 
 export const ShopContextProvider = (props) =>{

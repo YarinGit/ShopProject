@@ -2,6 +2,13 @@
   text-align: center;
 }
 
+/*
+
+  background-image: url('images/wepik-export-20230725061653SNCS.png');
+  background-size: cover; // You can also use 'contain' or '100% auto', depending on your needs 
+  background-position: center center;
+  background-repeat: no-repeat;
+*/
 .App-logo {
   height: 40vmin;
   pointer-events: none;

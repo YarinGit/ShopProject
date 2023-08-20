@@ -14,6 +14,7 @@ import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { ShopContextProvider } from "./components/shoping_cart/context/ShopContext";
 import { getSnap } from "./firebaseShop";
+import ContactUs from "./components/contactUs/ContactUs";
 
 // api 1 - https://dummyjson.com/products/search?q=phone
 // api 2 - https://fakestoreapi.com/products
@@ -27,18 +28,20 @@ function App() {
 useEffect(()=>{
   const getData = async ()=>{
   let {data} = await axios.get("https://fakestoreapi.com/products");
-  // console.log("data - ", data);
+  console.log("data - ", data);
   setProductsArr(data);
+
+  putInFirebase(data);
 }
 getData();
 },[]);
+ 
+const putInFirebase = (data)=>{
   
+}
   return (
     <div className="container">
 
-      {/* ShopingCart in test folder */}
-      {/* <CreateShopingCart/> */}
-        
         <productConext.Provider value={productsArr}>
         <ShopContextProvider>
        <Router>
@@ -46,11 +49,11 @@ getData();
         <Routes>
           <Route path="/" element={<Shop />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/contact" element={<ContactUs />} />
           </Routes>
       </Router> 
       </ShopContextProvider>
       </productConext.Provider> 
- 
     </div>
   );
 }

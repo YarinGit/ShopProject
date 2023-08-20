@@ -3,14 +3,13 @@ import {
     getFirestore,
     collection,
     getDocs,
-
  } from "firebase/firestore";
 
  import { 
   getAuth, 
   createUserWithEmailAndPassword,
   signOut,signInWithEmailAndPassword,
-
+  onAuthStateChanged
  } from "firebase/auth";
 
 const firebaseConfig = {
@@ -51,12 +50,8 @@ getDocs(colRef)
 
   export const signIn = (logInData)=>{
     let {email, password} = logInData;
-    console.log("email - ", email);
-    console.log("password - ", password);
     createUserWithEmailAndPassword(auth, email, password)
     .then(cred=>{
-      console.log("cred = ", cred);
-      console.log("user created - ", cred.user);
     })
     .catch(error=>{console.log(error.message);})
   }
@@ -66,7 +61,6 @@ getDocs(colRef)
   export const signAndLogOut=()=>{
     signOut(auth)
     .then(()=>{
-      console.log("User sign out");
     })
     .catch(error=>{
       console.log(error.message);
@@ -84,6 +78,11 @@ getDocs(colRef)
       return false;
     })
   }
+
+  // subscribing to auth changes
+  onAuthStateChanged(auth, (user)=>{
+    console.log("user status changed:", user)
+  })
 
 //#endregion
 

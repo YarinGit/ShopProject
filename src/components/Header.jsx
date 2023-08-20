@@ -20,10 +20,6 @@ const Header = () => {
     setIsPopupSignUpOpen(true);
   };
   const handlePopupSignUpClose = (signUpData) => {
-    // console.log("signUpData - ", signUpData);
-    // console.log('email: in signUpData', signUpData.email);
-    // console.log('password: in signUpData', signUpData.password);
-
     if (
       signUpData !== { email: "", password: "" } &&
       isEmailCorrect(signUpData.email)
@@ -91,16 +87,11 @@ const Header = () => {
           <div className="nav">
             <ul>
               <li>
-                <Link to="/">Contact us</Link>
+                <Link to="/contact">Contact us</Link>
               </li>
               <li>
                 <Link to="/">Home</Link>
               </li>
-              {/* <li>
-                <Link onClick={handlePopupSignUpOpen}>Sign up</Link>
-                <PopupSignUp open={isPopupSignUpOpen} onClose={handlePopupSignUpClose} />
-
-              </li> */}
               <li>
                 {isLogIn ? (
                   <Link onClick={handleSignOut}>Sign out</Link>
@@ -121,13 +112,6 @@ const Header = () => {
                 </Link>
               </li>
             </ul>
-            <button
-              onClick={() => {
-                console.log("isLogIn", isLogIn);
-              }}
-            >
-              check
-            </button>
           </div>
         </div>
       </div>

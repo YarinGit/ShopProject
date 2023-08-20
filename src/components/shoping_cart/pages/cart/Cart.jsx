@@ -3,6 +3,7 @@ import { productConext } from "../../../../App";
 import { ShopContext } from "../../context/ShopContext";
 import CartItem from "./CartItem";
 import "./cart.css";
+import PaypayPay from "./PaypayPay";
 
 const Cart = () => {
   const productsArr = useContext(productConext);
@@ -22,9 +23,10 @@ const Cart = () => {
         {totalAmount>0? 
         <div className="checkout">
           <h4> Subtotal: {totalAmount} &#8362;</h4>
+          {/* <PaypayPay clientId={"test"} /> */}
         </div>:
-        <h2>Your Cart Is Empty</h2>
-}
+          <h2>Your Cart Is Empty</h2>
+          }
       </div>
     </div>
   );
