@@ -15,6 +15,7 @@ import axios from "axios";
 import { ShopContextProvider } from "./components/shoping_cart/context/ShopContext";
 import { getSnap } from "./firebaseShop";
 import ContactUs from "./components/contactUs/ContactUs";
+import Favorite from "./components/favorite/Favorite";
 
 // api 1 - https://dummyjson.com/products/search?q=phone
 // api 2 - https://fakestoreapi.com/products
@@ -50,6 +51,7 @@ const putInFirebase = (data)=>{
           <Route path="/" element={<Shop />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/contact" element={<ContactUs />} />
+          <Route path="/favorite" element={<Favorite />} />
           </Routes>
       </Router> 
       </ShopContextProvider>

@@ -93,6 +93,9 @@ const Header = () => {
                 <Link to="/">Home</Link>
               </li>
               <li>
+                <Link to="/favorite">Favorite</Link>
+              </li>
+              <li>
                 {isLogIn ? (
                   <Link onClick={handleSignOut}>Sign out</Link>
                 ) : (
