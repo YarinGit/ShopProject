@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import BoxProdact from './BoxProdact';
 import "./shop.css"
 import { productConext } from '../../../../App';
@@ -6,14 +6,22 @@ import {GrSearch} from 'react-icons/gr'
 
 const Shop = () => {
   const productArr = useContext(productConext);
+  const [serchingText, setSerchingText] = useState('');
+
+  const filteredProductList = productArr.filter(product=>{
+    return product.title.toLowerCase().includes(serchingText.toLowerCase()) ||
+    product.description.toLowerCase().includes(serchingText.toLowerCase())
+  })
   return (
     <div className="container">
-      <button><GrSearch size={35}/></button>
-
+      {/* serching in product */}
+      <input placeholder='serch product..' type="text" onChange={(event)=>{
+        setSerchingText(event.target.value)
+      }} />
     <div className='productContainer'>
 
-                 {productArr.map(item=>{
-           return <BoxProdact key={item.id} id={item.id} title={item.title} description={item.description} image={item.image} price={item.price} />
+                 {filteredProductList.map((item, index)=>{
+           return <BoxProdact key={index} id={item.id} title={item.title} description={item.description} image={item.images[2]} price={item.price} serchingText={serchingText} />
         })} 
 
     </div>

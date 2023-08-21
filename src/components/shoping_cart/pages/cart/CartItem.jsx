@@ -2,12 +2,11 @@ import React, { useContext } from 'react'
 import { ShopContext } from '../../context/ShopContext';
 
 const CartItem = (props) => {
-    const {id, title, image, price } = props.data;
+    const {id, title, images, price } = props.data;
   const { cartItems, addToCart,removeFromCart, updateCartItemCount } = useContext(ShopContext);
-    
   return (
     <div className='cartItem'>
-        <img src={image} alt={title.slice(0,5)} />
+        <img src={images[0]} alt={title.slice(0,5)} />
         <div className="title">
             <p> <b> {title} </b> </p>            
 

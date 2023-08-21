@@ -17,8 +17,8 @@
   }
   
   .cartItem img {
-    width: 200px;
-    max-height: 250px;
+    width: 150px;
+    max-height: 200px;
   }
   
   .cartItem .title {

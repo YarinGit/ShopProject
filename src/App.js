@@ -1,12 +1,5 @@
 import "./App.css";
 import Header from "./components/Header";
-import Main from "./components/Main";
-import AddNewDocDB from "./test/AddNewDocDB";
-import BasicPage from "./test/BasicPage";
-import CreateShopingCart from "./test/createShopingCart/CreateShopingCart";
-import DB from "./test/DB";
-import InputToFB from "./test/InputToFB";
-import Context from "./test/hooks/Context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Shop from "./components/shoping_cart/pages/shop/Shop";
 import Cart from "./components/shoping_cart/pages/cart/Cart";
@@ -19,20 +12,27 @@ import Favorite from "./components/favorite/Favorite";
 
 // api 1 - https://dummyjson.com/products/search?q=phone
 // api 2 - https://fakestoreapi.com/products
+// api 3 - https://api.storerestapi.com/products
+// api 4 - https://api.escuelajs.co/api/v1/products
 export const productConext = createContext();
 function App() {
 
-  getSnap();
+  // getSnap();
 
   // ------------------------------------------------------------------------------------------------------------------------------------
   const [productsArr, setProductsArr] = useState([]);
 useEffect(()=>{
   const getData = async ()=>{
-  let {data} = await axios.get("https://fakestoreapi.com/products");
+
+  let {data} = await axios.get("https://api.escuelajs.co/api/v1/products");
+  for (let i = 0; i < data.length; i++) {
+    data[i].id = i+1;
+  }
+  
   console.log("data - ", data);
   setProductsArr(data);
 
-  putInFirebase(data);
+  // putInFirebase(data);
 }
 getData();
 },[]);

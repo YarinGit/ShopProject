@@ -19,7 +19,7 @@
   height: 50%;
   }
 .productBox .descriptionDiv {
-  height: 35%;
+  height: 30%;
   }
   .productBox .buttom {
   height: 10%;
@@ -46,9 +46,9 @@
 
 /* Product description */
 .productBox .description {
-  margin-top: 12px;
+  margin-top: 16px;
   font-size: 14px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   color: #555;
   text-align: center;
 }

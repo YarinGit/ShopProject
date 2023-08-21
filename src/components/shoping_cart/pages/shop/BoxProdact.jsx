@@ -3,10 +3,12 @@ import "./boxProduct.css";
 import { TbShoppingCartPlus } from "react-icons/tb";
 import { ShopContext } from "../../context/ShopContext";
 
-const BoxProdact = ({ title, description, image, price, id }) => {
+const BoxProdact = ({ title, description, image, price, id, serchingText }) => {
   let maxLengthDescription = 350;
 
+  if ( typeof(description) == typeof("") && description != "") {
   description = description.slice(0,maxLengthDescription);
+  }
 
   const { addToCart } = useContext(ShopContext);
   return (

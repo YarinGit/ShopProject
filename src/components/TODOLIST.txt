@@ -29,7 +29,7 @@ React Shopping Cart Ecommerce Beginner Website - Build & Deploy A React Beginner
 #4 create contact us page -> conection, data on the shop (copy from real shop)
  - in react component to watsapp - ישראל
 #5 admin page - adding delete and update of users and products
-#6 add to fivorite button
+#6 add to fivorite button - ישראל
 #7 create project Book
 
 */
