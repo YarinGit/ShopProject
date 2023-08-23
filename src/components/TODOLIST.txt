@@ -30,7 +30,7 @@ React Shopping Cart Ecommerce Beginner Website - Build & Deploy A React Beginner
  - in react component to WhatsApp - ישראל - בוצע(להשלים שליחה פיזית למייל ולווטסאפ)
 #5 admin page - adding delete and update of users and products - ירין
 #6 add to fivorite button and save in firebase - ישראל
-#7 Division into seperite pages - ישראל
+#7 Division into seperite pages - ישראל - בוצע
 #8 create project Book
 
 

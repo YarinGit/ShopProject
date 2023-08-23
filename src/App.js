@@ -16,11 +16,30 @@ import Favorite from "./components/favorite/Favorite";
 // api 4 - https://api.escuelajs.co/api/v1/products
 export const productConext = createContext();
 function App() {
-
+  const defineCategoriesList=(data)=>{
+    let categoriesList = [];
+  
+      categoriesList.push(data[0].category.name)
+      for (let i = 1; i < data.length; i++) {
+        let currentCategory = data[i].category.name
+        let isExist=true;
+        for (let j = 0; j < categoriesList.length; j++) {
+          if (categoriesList[j] == currentCategory ) {
+            isExist = false;
+          }
+        }
+          if (isExist) {
+            categoriesList.push(currentCategory);
+          }
+      }
+    console.log("categoriesList - ", categoriesList);
+    return categoriesList;
+  }
   // getSnap();
 
   // ------------------------------------------------------------------------------------------------------------------------------------
   const [productsArr, setProductsArr] = useState([]);
+  const [categoriesList, setCategoriesList] = useState([]);
 useEffect(()=>{
   const getData = async ()=>{
 
@@ -28,15 +47,15 @@ useEffect(()=>{
   for (let i = 0; i < data.length; i++) {
     data[i].id = i+1;
   }
-  
   console.log("data - ", data);
+  setCategoriesList(defineCategoriesList(data))
   setProductsArr(data);
 
   // putInFirebase(data);
 }
 getData();
 },[]);
- 
+ console.log("categoriesList - final", categoriesList);
 const putInFirebase = (data)=>{
   
 }
