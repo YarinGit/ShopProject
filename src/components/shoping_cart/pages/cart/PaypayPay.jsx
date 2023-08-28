@@ -1,14 +1,15 @@
-import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js'
-import React from 'react'
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
+import React from "react";
 
-const PaypayPay = ({clientId}) => {
+const PaypayPay = ({ clientId, amount }) => {
+  console.log("amount", amount);
   return (
     <div>
-        <PayPalScriptProvider options={{ "client-id": clientId }}>
-            <PayPalButtons style={{ layout: "horizontal" }} />
-        </PayPalScriptProvider>
+      <PayPalScriptProvider options={{ clientId: clientId }}>
+        <PayPalButtons  style={{ layout: "horizontal" }} amount={amount} />
+      </PayPalScriptProvider>
     </div>
-  )
-}
+  );
+};
 
-export default PaypayPay
+export default PaypayPay;

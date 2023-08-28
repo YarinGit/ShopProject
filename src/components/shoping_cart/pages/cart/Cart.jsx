@@ -25,7 +25,7 @@ const Cart = () => {
         {totalAmount>0? 
         <div className="checkout">
           <h4> Subtotal: {totalAmount} &#8362;</h4>
-          {/* <PaypayPay clientId={"test"} /> */}
+          <PaypayPay clientId={"test"} amount={totalAmount} />
         </div>:
           <h2>Your Cart Is Empty</h2>
           }

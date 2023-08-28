@@ -16,71 +16,73 @@ import Favorite from "./components/favorite/Favorite";
 // api 4 - https://api.escuelajs.co/api/v1/products
 export const productConext = createContext();
 function App() {
-  const defineCategoriesList=(data)=>{
+  const defineCategoriesList = (data) => {
     let categoriesList = [];
-  
-      categoriesList.push(data[0].category.name)
-      for (let i = 1; i < data.length; i++) {
-        let currentCategory = data[i].category.name
-        let isExist=true;
-        for (let j = 0; j < categoriesList.length; j++) {
-          if (categoriesList[j] == currentCategory ) {
-            isExist = false;
-          }
+    categoriesList.push(data[0].category);
+    for (let i = 1; i < data.length; i++) {
+      let currentCategory = data[i].category;
+      let isExist = true;
+      for (let j = 0; j < categoriesList.length; j++) {
+        if (categoriesList[j] == currentCategory) {
+          isExist = false;
         }
-          if (isExist) {
-            categoriesList.push(currentCategory);
-          }
       }
+      if (isExist) {
+        categoriesList.push(currentCategory);
+      }
+    }
     console.log("categoriesList - ", categoriesList);
-    return categoriesList;
-  }
+
+    let newCategoriesList = [];
+    categoriesList.map((item) => {
+      newCategoriesList.push({ value: item, label: item });
+    });
+
+    console.log("newCategoriesList - ", newCategoriesList);
+
+    return newCategoriesList;
+  };
   // getSnap();
 
   // ------------------------------------------------------------------------------------------------------------------------------------
   const [productsArr, setProductsArr] = useState([]);
   const [categoriesList, setCategoriesList] = useState([]);
-useEffect(()=>{
-  const getData = async ()=>{
+  useEffect(() => {
+    const getData = async () => {
+      let {data} = await axios.get("https://fakestoreapi.com/products");
+      for (let i = 0; i < data.length; i++) { data[i].id = i+1;}
+      console.log("data - ", data);
+      setCategoriesList(defineCategoriesList(data))
+      setProductsArr(data);
 
-  let {data} = await axios.get("https://api.escuelajs.co/api/v1/products");
-  for (let i = 0; i < data.length; i++) {
-    data[i].id = i+1;
-  }
-  console.log("data - ", data);
-  setCategoriesList(defineCategoriesList(data))
-  setProductsArr(data);
-
-  // putInFirebase(data);
-}
-getData();
-},[]);
- console.log("categoriesList - final", categoriesList);
-const putInFirebase = (data)=>{
-  
-}
+      // putInFirebase(data);
+    };
+    getData();
+  }, []);
+  console.log("categoriesList - final", categoriesList);
+  const putInFirebase = (data) => {};
   return (
     <div className="container">
-
-        <productConext.Provider value={productsArr}>
+      <productConext.Provider value={productsArr}>
         <ShopContextProvider>
-       <Router>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Shop />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/contact" element={<ContactUs />} />
-          <Route path="/favorite" element={<Favorite />} />
-          </Routes>
-      </Router> 
-      </ShopContextProvider>
-      </productConext.Provider> 
+          <Router>
+            <Header />
+            <Routes>
+              <Route
+                path="/"
+                element={<Shop categoriesList={categoriesList} />}
+              />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/contact" element={<ContactUs />} />
+              <Route path="/favorite" element={<Favorite />} />
+            </Routes>
+          </Router>
+        </ShopContextProvider>
+      </productConext.Provider>
     </div>
   );
 }
 export default App;
-
-
 
 /*
 

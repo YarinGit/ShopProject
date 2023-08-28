@@ -3,6 +3,8 @@ import {
     getFirestore,
     collection,
     getDocs,
+    doc,
+    setDoc,
  } from "firebase/firestore";
 
  import { 
@@ -51,10 +53,15 @@ getDocs(colRef)
   export const signIn = (logInData)=>{
     let {email, password} = logInData;
     createUserWithEmailAndPassword(auth, email, password)
-    .then(cred=>{
+    .then((cred) => {
+      // After successful sign-up, create a corresponding favorites document
+      const favoritesDocRef = doc(db, "favorites", cred.user.uid);
+      setDoc(favoritesDocRef, { books: [] }); // Initialize favorites as an empty array
     })
-    .catch(error=>{console.log(error.message);})
-  }
+    .catch((error) => {
+      console.log(error.message);
+    });
+};
 //#endregion
 
   //#region Logging in and out
