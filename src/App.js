@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Shop from "./components/shoping_cart/pages/shop/Shop";
 import Cart from "./components/shoping_cart/pages/cart/Cart";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { ShopContextProvider } from "./components/shoping_cart/context/ShopContext";
 import { getSnap } from "./firebaseShop";
@@ -15,7 +15,18 @@ import Favorite from "./components/favorite/Favorite";
 // api 3 - https://api.storerestapi.com/products
 // api 4 - https://api.escuelajs.co/api/v1/products
 export const productConext = createContext();
-function App() {
+//#region isLogInConext
+//#endregion
+
+// export const isUserLoggedIn = (_user)=>{
+  //   console.log("_user in app - ", _user);
+  //   if (_user == null) {
+    //     return setIsLogIn(false);
+    //   }
+    //   setIsLogIn(true);
+    // } 
+    
+    function App() {
   const defineCategoriesList = (data) => {
     let categoriesList = [];
     categoriesList.push(data[0].category);
@@ -106,5 +117,6 @@ useEffect(()=>{
 getData();
 },[]);
 
-
 */
+
+

@@ -25,15 +25,16 @@ React Shopping Cart Ecommerce Beginner Website - Build & Deploy A React Beginner
 
 #1 conection to paypal - עזרה ממתרגל
 #2 add serch function - ירין - בוצע
-#3 filter by categories - ירין
+#3 filter by categories - ירין - בוצע
 #4 create contact us page -> data on the shop (copy from real shop)
  - in react component to WhatsApp - ישראל - בוצע(להשלים שליחה פיזית למייל ולווטסאפ)
 #5 admin page - adding delete and update of users and products - ירין
 #6 add to fivorite button and save in firebase - ישראל
 #7 Division into seperite pages - ישראל - בוצע
 #8 create project Book
+#9 לסדר את הלוגאין
 
-
+לבדוק לגבי הלוג אין איך לעשות שיעודכן אוטומטית המשתנה
 דברים לבקש מהמתרגל
 #1 לעזור עם חיבור של פייפאל
 #2 לעזור איך מתחברים משני מחשבים לאותו חשבון פיירבייס

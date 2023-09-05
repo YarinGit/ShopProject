@@ -11,10 +11,11 @@ const Header = () => {
   const [isPopupLogInOpen, setIsPopupLogInOpen] = useState(false);
   const [isPopupSignUpOpen, setIsPopupSignUpOpen] = useState(false);
 
+  console.log("isLogIn in Heder - ", isLogIn);
   //#region Sign Auth
   const handleSignOut = () => {
     signAndLogOut();
-    setIsLogIn(false);
+    // setIsLogIn(false);
   };
   const handlePopupSignUpOpen = () => {
     setIsPopupSignUpOpen(true);
@@ -26,12 +27,12 @@ const Header = () => {
     ) {
       signIn(signUpData);
       console.log("signUpData", signUpData);
-      setIsLogIn(true);
+      // setIsLogIn(true);
     }
 
     // TODO: adjust this function to do it only after firebase apdate
     if (signUpData != null) {
-      setIsLogIn(true);
+      // setIsLogIn(true);
     }
 
     setIsPopupSignUpOpen(false);
@@ -48,7 +49,7 @@ const Header = () => {
       if(logExistingUserByEmailAndPassword(logInData.email, logInData.password))
       {
         console.log("log In seccess: ", logInData);
-        setIsLogIn(true);
+        // setIsLogIn(true);
       }
     }
     setIsPopupLogInOpen(false);

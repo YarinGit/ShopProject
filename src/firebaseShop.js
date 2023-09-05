@@ -13,6 +13,8 @@ import {
   signOut,signInWithEmailAndPassword,
   onAuthStateChanged
  } from "firebase/auth";
+import { useState } from "react";
+// import { isUserLoggedIn } from "./App";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCnIeACiMNfCOLuIG0mQ581wkfmrEUmmRM",
@@ -30,12 +32,26 @@ const firebaseConfig = {
   const auth = getAuth();
 
   // collection ref
-  const colRef = collection(db, "books")
+  const booksColRef = collection(db, "books")
+  const adminColRef = collection(db, "admin")
 
   //#region get collection data
 
   export const getSnap = ()=>{
-getDocs(colRef)
+    getDocs(adminColRef)
+    .then(snapshot =>{
+      let admins = [];
+      snapshot.docs.forEach(doc=>{
+        admins.push({...doc.data(), id:doc.id})
+        // add here the users who whii be admin, by id
+      })
+      console.log("admins - ", admins);
+    })
+    .catch(error=>console.log(error.message))
+
+  }
+  export const getBooks = ()=>{
+getDocs(booksColRef)
 .then(snapshot=>{
   let books = [];
   snapshot.docs.forEach(doc =>{
@@ -85,12 +101,17 @@ getDocs(colRef)
       return false;
     })
   }
-
+  let user;
   // subscribing to auth changes
-  onAuthStateChanged(auth, (user)=>{
-    console.log("user status changed:", user)
+  onAuthStateChanged(auth, (_user)=>{
+    console.log("_user status changed:", _user)
+    user = _user;
+    // isUserLoggedIn(user);
   })
 
+  export const isUserLoggedIn=()=>{
+    return user;
+  }
 //#endregion
 
         

@@ -3,6 +3,7 @@ import BoxProdact from './BoxProdact';
 import { productConext } from '../../../../App';
 import Select from 'react-select';
 import "./shop.css";
+import { getSnap } from '../../../../firebaseShop';
 
 
 const Shop = (categoriesList) => {
@@ -36,6 +37,9 @@ const Shop = (categoriesList) => {
   }, [chosenCategories])
   return (
     <div className="container">
+    <button onClick={()=>{
+      getSnap()
+    }} >clice here </button>
       {/* serching in product */}
       <input placeholder='serch product..' type="text" onChange={(event)=>{
         setSerchingText(event.target.value)
