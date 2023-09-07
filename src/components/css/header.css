@@ -17,11 +17,11 @@ align-items: center;
 .logo{
     display: flex;
     justify-content: space-between;
-    width: 65%;
+    width: 55%;
 }
 
 .nav{
-width: 35%;
+width: 45%;
   justify-content: space-around;
 }
 

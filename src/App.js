@@ -9,6 +9,7 @@ import { ShopContextProvider } from "./components/shoping_cart/context/ShopConte
 import { getSnap } from "./firebaseShop";
 import ContactUs from "./components/contactUs/ContactUs";
 import Favorite from "./components/favorite/Favorite";
+import ManagerPage from "./components/ManagerPage";
 
 // api 1 - https://dummyjson.com/products/search?q=phone
 // api 2 - https://fakestoreapi.com/products
@@ -79,13 +80,11 @@ export const productConext = createContext();
           <Router>
             <Header />
             <Routes>
-              <Route
-                path="/"
-                element={<Shop categoriesList={categoriesList} />}
-              />
+              <Route path="/"element={<Shop categoriesList={categoriesList} />}/>
               <Route path="/cart" element={<Cart />} />
               <Route path="/contact" element={<ContactUs />} />
               <Route path="/favorite" element={<Favorite />} />
+              <Route path="/managerPage" element={<ManagerPage />} />
             </Routes>
           </Router>
         </ShopContextProvider>

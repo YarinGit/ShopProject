@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaOpencart } from "react-icons/fa";
+import { GrUserManager } from "react-icons/gr";
 import PopupLogIn from "./popupAuth/PopupLogIn";
 import { logExistingUserByEmailAndPassword, signAndLogOut, signIn } from "../firebaseShop";
 import "./css/header.css";
@@ -61,10 +62,6 @@ const Header = () => {
     }
     return true;
   };
-  // const isPasswordCorrect = (password)=>{
-  //   if(typeof(password) == "string")return password.length<=6;
-  //   return false;
-  // }
 
   //#endregion
 
@@ -76,7 +73,6 @@ const Header = () => {
 
   return (
     <div className="header">
-      <div>
         <div className="roww">
           <div className="logo">
             <img src="../images/logoShop.png" alt="logoShop" />
@@ -87,6 +83,11 @@ const Header = () => {
 
           <div className="nav">
             <ul>
+            <li>
+                <Link to="/ManagerPage">
+                  <GrUserManager size={35} />
+                </Link>
+              </li>
               <li>
                 <Link to="/contact">Contact us</Link>
               </li>
@@ -117,7 +118,6 @@ const Header = () => {
               </li>
             </ul>
           </div>
-        </div>
       </div>
     </div>
   );

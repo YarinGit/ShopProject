@@ -11,7 +11,7 @@ import {
   getAuth, 
   createUserWithEmailAndPassword,
   signOut,signInWithEmailAndPassword,
-  onAuthStateChanged
+  onAuthStateChanged, 
  } from "firebase/auth";
 import { useState } from "react";
 // import { isUserLoggedIn } from "./App";
@@ -33,23 +33,26 @@ const firebaseConfig = {
 
   // collection ref
   const booksColRef = collection(db, "books")
-  const adminColRef = collection(db, "admin")
+  const adminPasswordColRef = collection(db, "adminPassword")
 
   //#region get collection data
 
-  export const getSnap = ()=>{
-    getDocs(adminColRef)
-    .then(snapshot =>{
-      let admins = [];
-      snapshot.docs.forEach(doc=>{
-        admins.push({...doc.data(), id:doc.id})
-        // add here the users who whii be admin, by id
-      })
-      console.log("admins - ", admins);
-    })
-    .catch(error=>console.log(error.message))
-
-  }
+  export const getAdminPassword = async () => {
+    try {
+      const snapshot = await getDocs(adminPasswordColRef); 
+      if (snapshot.docs.length > 0) {
+        const { password } = snapshot.docs[0].data();
+        return password;
+      } else {
+        throw new Error("No admin password found"); // Handle the case where no password is found
+      }
+    } catch (error) {
+      console.error(error.message);
+      alert(error.message);
+      throw error; // Rethrow the error to handle it at a higher level if needed
+    }
+  };
+  
   export const getBooks = ()=>{
 getDocs(booksColRef)
 .then(snapshot=>{
@@ -62,6 +65,11 @@ getDocs(booksColRef)
   })
   .catch(error=>console.log(error.message))
   }
+
+  const getListOfUsers = ()=>{
+
+  }
+
   //#endregion
   
   //#region Signing users up
