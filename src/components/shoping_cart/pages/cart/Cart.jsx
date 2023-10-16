@@ -18,7 +18,7 @@ const Cart = () => {
       <div className="cartItems">
         {/* רץ על המערך בודק אם האיבר במקום ה איי די שווה אפס הוא לא מציג אותו */}
         {productsArr.map((product, index) => {
-          if (cartItems[product.id] !== 0) {
+          if (cartItems[product.id] >= 1 && cartItems[product.id] != null) {
             return <CartItem data={product} key={index} />;
           }
         })}

@@ -1,25 +1,35 @@
 import React, { createContext, useContext, useState } from "react";
 import { productConext } from "../../../App";
 
-let cart = {};
+// let cart = {};
 export const ShopContext = createContext(null);
 
 export const ShopContextProvider = (props) =>{
   
-  const getDefaultCart = (productsArray) => {
-    for (let i = 1; i < 20 + 1; i++) {
-      cart[i] = 0;
-    }
-    return cart;
-  };
+  // const getDefaultCart = (productsArray) => {
+    // for (let i = 1; i < 20 + 1; i++) {
+    //   cart[i] = 0;
+    // }
+  //   return cart;
+  // };
   const productArr = useContext(productConext);
-  const [cartItems, setCartItems] = useState(getDefaultCart(productArr));
+  const [cartItems, setCartItems] = useState({});
+
   const addToCart = (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
+    if (cartItems[itemId] == null) {
+      setCartItems((prev) => ({ ...prev, [itemId]: 1 }));
+    }
+    else setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
   };
 
   const removeFromCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+    if (cartItems.itemId <= 0) {
+      console.log("in khgdkjgdkjhdk,jhd");
+      let updatedCart = cartItems;
+      delete updatedCart.itemId;
+      setCartItems(updatedCart);
+    }
   };
 
   const updateCartItemCount = (newAmount, itemId) => {
@@ -29,10 +39,10 @@ export const ShopContextProvider = (props) =>{
   const getTotalCartAmount = ()=>{
     let totalAmount = 0;
     for (const item in cartItems) {
-      if (cartItems[item] >0) {
+      // if (cartItems[item] >0) {
         let itemInfo = productArr.find(product=>product.id=== Number(item))
         totalAmount+= cartItems[item]*itemInfo.price;
-      }      
+      // }      
     }
     return totalAmount;
   }
