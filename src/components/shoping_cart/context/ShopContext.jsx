@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useState } from "react";
 import { productConext } from "../../../App";
 
-// {1:0,2:0,3:0,4:0}
+let cart = {};
 export const ShopContext = createContext(null);
 
 export const ShopContextProvider = (props) =>{
+  
   const getDefaultCart = (productsArray) => {
-    let cart = {};
     for (let i = 1; i < 20 + 1; i++) {
       cart[i] = 0;
     }
