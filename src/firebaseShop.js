@@ -1,10 +1,8 @@
 import {initializeApp } from "firebase/app";
 import { 
-    getFirestore,
-    collection,
-    getDocs,
-    doc,
-    setDoc,
+    getFirestore, collection, getDocs, onSnapshot,
+    doc, setDoc,
+    addDoc, 
  } from "firebase/firestore";
 
  import { 
@@ -32,10 +30,19 @@ const firebaseConfig = {
   const auth = getAuth();
 
   // collection ref
-  const booksColRef = collection(db, "books")
+  const cartsColRef = collection(db, "carts")
   const adminPasswordColRef = collection(db, "adminPassword")
 
+
   //#region get collection data
+  
+  // subscribing to auth changes
+  let user;
+  onAuthStateChanged(auth, (_user)=>{
+    console.log("_user status changed:", _user)
+    user = _user;
+    // isUserLoggedIn(user);
+  })
 
   export const getAdminPassword = async () => {
     try {
@@ -53,18 +60,47 @@ const firebaseConfig = {
     }
   };
   
-  export const getBooks = ()=>{
-getDocs(booksColRef)
-.then(snapshot=>{
-  let books = [];
-  snapshot.docs.forEach(doc =>{
-    books.push({...doc.data(), id:doc.id})
-  })
-  console.log("books - ", books);
-
-  })
-  .catch(error=>console.log(error.message))
+  // getDocs is used to take whats in the collection in one time
+  // later is how to do it real time...
+  export const getDocsFunction = ()=>{
+    getDocs(cartsColRef)
+    .then(snapshot=>{
+      let carts = [];
+      console.log("snapshot.docs", snapshot.docs);
+      snapshot.docs.forEach(doc =>{
+        carts.push({...doc.data(), id:doc.id})
+      })
+      console.log("carts - ", carts);
+      
+    })
+    .catch(error=>console.log(error.message, "error printed"))
   }
+  
+  // real time
+  export const realTimeGetAndSetCarts = () =>{
+    onSnapshot(cartsColRef, (snapshot)=>{
+  let carts = [];
+  console.log("snapshot.docs", snapshot.docs);
+  snapshot.docs.forEach(doc =>{
+    carts.push({...doc.data(), id:doc.id})
+  })
+  console.log("carts - ", carts);
+  return carts;
+})  
+}
+
+export const addAndUpdateCart=(cartItems)=>{
+  try{
+    let clientUid = user.uid;
+    console.log("clientUid", clientUid);
+    addDoc(cartsColRef, {
+        clientUid: clientUid,
+        cartItems: cartItems
+      })
+      .then(()=>console.log("adding is complete"))
+    }
+    catch(error){console.log(error.message)}
+}
 
   const getListOfUsers = ()=>{
 
@@ -109,13 +145,6 @@ getDocs(booksColRef)
       return false;
     })
   }
-  let user;
-  // subscribing to auth changes
-  onAuthStateChanged(auth, (_user)=>{
-    console.log("_user status changed:", _user)
-    user = _user;
-    // isUserLoggedIn(user);
-  })
 
   export const isUserLoggedIn=()=>{
     return user;

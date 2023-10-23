@@ -4,8 +4,10 @@ import { ShopContext } from "../../context/ShopContext";
 import CartItem from "./CartItem";
 import "./cart.css";
 import PaypayPay from "./PaypayPay";
+import { getDocsFunction, realTimeGetAndSetCarts } from "../../../../firebaseShop";
 
 const Cart = () => {
+  realTimeGetAndSetCarts();
   const productsArr = useContext(productConext);
   const { cartItems, getTotalCartAmount } = useContext(ShopContext);
   const totalAmount = getTotalCartAmount().toFixed(2);
@@ -15,6 +17,7 @@ const Cart = () => {
       <div>
         <h1>Your Cart Items</h1>
       </div>
+      <button onClick={getDocsFunction} >aaaa</button>
       <div className="cartItems">
         {/* רץ על המערך בודק אם האיבר במקום ה איי די שווה אפס הוא לא מציג אותו */}
         {productsArr.map((product, index) => {
