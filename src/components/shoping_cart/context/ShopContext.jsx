@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { productConext } from "../../../App";
-import { addAndUpdateCart } from "../../../firebaseShop";
+import { getDocsFunction } from "../../../firebaseShop";
 
 export const ShopContext = createContext(null);
 
@@ -9,12 +9,17 @@ export const ShopContextProvider = (props) =>{
   const productArr = useContext(productConext);
   const [cartItems, setCartItems] = useState({});
 
+  // לעשות שיכנס לפה העגלה המיועדת
+  // useEffect(()=>{
+  //   setCartItems(getDocsFunction())
+  //   },[])
+
   const addToCart = (itemId) => {
     if (cartItems[itemId] == null) {
       setCartItems((prev) => ({ ...prev, [itemId]: 1 }));
     }
     else setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
-    addAndUpdateCart(cartItems);
+    // addAndUpdateCart(cartItems);
   };
 
   const removeFromCart = (itemId) => {
@@ -24,12 +29,12 @@ export const ShopContextProvider = (props) =>{
       delete updatedCart.itemId;
       setCartItems(updatedCart);
     }
-    addAndUpdateCart(cartItems);
+    // addAndUpdateCart(cartItems);
   };
 
   const updateCartItemCount = (newAmount, itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: newAmount }));
-    addAndUpdateCart(cartItems);
+    // addAndUpdateCart(cartItems);
   };
 
   const getTotalCartAmount = ()=>{

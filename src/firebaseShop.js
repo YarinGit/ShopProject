@@ -12,7 +12,6 @@ import {
   onAuthStateChanged, 
  } from "firebase/auth";
 import { useState } from "react";
-// import { isUserLoggedIn } from "./App";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCnIeACiMNfCOLuIG0mQ581wkfmrEUmmRM",
@@ -41,8 +40,40 @@ const firebaseConfig = {
   onAuthStateChanged(auth, (_user)=>{
     console.log("_user status changed:", _user)
     user = _user;
-    // isUserLoggedIn(user);
   })
+
+
+//TODO: this function spows to get all users
+
+  export const aaa = () => {
+//   console.log("allUsers -a-a-a-a-a-", allUsers);
+}
+  // let allUsers;
+  // const listAllUsers = (nextPageToken) => {
+  //   // List batch of users, 50 at a time.
+  //   auth
+  //     .listUsers(30, nextPageToken)
+  //     .then((listUsersResult) => {
+  //       listUsersResult.users.forEach((userRecord) => {
+  //         console.log('user', userRecord.toJSON());
+  //       });
+  //       if (listUsersResult.pageToken) {
+  //         // List next batch of users.
+  //         listAllUsers(listUsersResult.pageToken);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log('Error listing users:', error);
+  //     });
+  // };
+  // // Start listing users from the beginning, 1000 at a time.
+  // listAllUsers();
+
+
+
+
+
+
 
   export const getAdminPassword = async () => {
     try {
@@ -60,36 +91,41 @@ const firebaseConfig = {
     }
   };
   
-  // getDocs is used to take whats in the collection in one time
-  // later is how to do it real time...
-  export const getDocsFunction = ()=>{
-    getDocs(cartsColRef)
+  // the carts is undefinde
+  export const getCartUser=()=>{
+    let carts = getDocsFunction();
+    console.log("cartsssss",getDocsFunction());
+    console.log("user",user);
+
+
+    // if() return carts;
+    return {};
+  }
+
+
+
+  // getDocs is used to take whats in the collection
+  export const getDocsFunction = async()=>{
+    let carts = [];
+    await getDocs(cartsColRef)
     .then(snapshot=>{
-      let carts = [];
       console.log("snapshot.docs", snapshot.docs);
       snapshot.docs.forEach(doc =>{
         carts.push({...doc.data(), id:doc.id})
       })
       console.log("carts - ", carts);
-      
     })
-    .catch(error=>console.log(error.message, "error printed"))
+    .catch(error=>{
+      console.log(error.message, "error printed")
+    })
+    return carts;
   }
-  
-  // real time
-  export const realTimeGetAndSetCarts = () =>{
-    onSnapshot(cartsColRef, (snapshot)=>{
-  let carts = [];
-  console.log("snapshot.docs", snapshot.docs);
-  snapshot.docs.forEach(doc =>{
-    carts.push({...doc.data(), id:doc.id})
-  })
-  console.log("carts - ", carts);
-  return carts;
-})  
-}
 
-export const addAndUpdateCart=(cartItems)=>{
+export const createCart=(cartItems)=>{
+  // לעשות שהאיי די של העגלה יהיה האיי די של המשתמש
+let carts = getDocsFunction();
+console.log("carts", carts);
+console.log("carts", carts);
   try{
     let clientUid = user.uid;
     console.log("clientUid", clientUid);
@@ -111,6 +147,7 @@ export const addAndUpdateCart=(cartItems)=>{
   //#region Signing users up
 
   export const signIn = (logInData)=>{
+    createCart();
     let {email, password} = logInData;
     createUserWithEmailAndPassword(auth, email, password)
     .then((cred) => {
