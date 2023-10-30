@@ -1,16 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaOpencart } from "react-icons/fa";
 import { GrUserManager } from "react-icons/gr";
 import PopupLogIn from "./popupAuth/PopupLogIn";
 import { logExistingUserByEmailAndPassword, signAndLogOut, signIn } from "../firebaseShop";
 import "./css/header.css";
+import useAuthState from "./useAuthState";
 
 const Header = () => {
   // Popup Log in
   const [isLogIn, setIsLogIn] = useState(false);
   const [isPopupLogInOpen, setIsPopupLogInOpen] = useState(false);
   const [isPopupSignUpOpen, setIsPopupSignUpOpen] = useState(false);
+  const [user, setUser] = useState(useAuthState());
+console.log("user_user_user_user_user_user", useAuthState());
+console.log("user_user_user_user_user_user", user);
+  useEffect(()=>{
+
+console.log("useAuthState happend");
+
+},[useAuthState])
 
   console.log("isLogIn in Heder - ", isLogIn);
   //#region Sign Auth
@@ -27,8 +36,7 @@ const Header = () => {
       isEmailCorrect(signUpData.email)
     ) {
       signIn(signUpData);
-      console.log("signUpData", signUpData);
-      // setIsLogIn(true);
+      // console.log("signUpData", signUpData);
     }
 
     // TODO: adjust this function to do it only after firebase apdate

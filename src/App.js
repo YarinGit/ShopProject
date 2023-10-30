@@ -10,6 +10,7 @@ import { getSnap } from "./firebaseShop";
 import ContactUs from "./components/contactUs/ContactUs";
 import Favorite from "./components/favorite/Favorite";
 import ManagerPage from "./components/ManagerPage";
+import useAuthState from "./components/useAuthState";
 
 // api 1 - https://dummyjson.com/products/search?q=phone
 // api 2 - https://fakestoreapi.com/products
@@ -19,15 +20,8 @@ export const productConext = createContext();
 //#region isLogInConext
 //#endregion
 
-// export const isUserLoggedIn = (_user)=>{
-  //   console.log("_user in app - ", _user);
-  //   if (_user == null) {
-    //     return setIsLogIn(false);
-    //   }
-    //   setIsLogIn(true);
-    // } 
-    
     function App() {
+      let user = useAuthState()
   const defineCategoriesList = (data) => {
     let categoriesList = [];
     categoriesList.push(data[0].category);
@@ -54,8 +48,6 @@ export const productConext = createContext();
 
     return newCategoriesList;
   };
-  // getSnap();
-
   // ------------------------------------------------------------------------------------------------------------------------------------
   const [productsArr, setProductsArr] = useState([]);
   const [categoriesList, setCategoriesList] = useState([]);
@@ -66,11 +58,10 @@ export const productConext = createContext();
       console.log("data - ", data);
       setCategoriesList(defineCategoriesList(data))
       setProductsArr(data);
-
-      // putInFirebase(data);
     };
     getData();
   }, []);
+
   console.log("categoriesList - final", categoriesList);
   const putInFirebase = (data) => {};
   return (
@@ -93,6 +84,7 @@ export const productConext = createContext();
   );
 }
 export default App;
+
 
 /*
 
@@ -117,5 +109,3 @@ getData();
 },[]);
 
 */
-
-

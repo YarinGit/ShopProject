@@ -11,7 +11,7 @@ import {
   signOut,signInWithEmailAndPassword,
   onAuthStateChanged, 
  } from "firebase/auth";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCnIeACiMNfCOLuIG0mQ581wkfmrEUmmRM",
@@ -26,7 +26,7 @@ const firebaseConfig = {
 
   // init services
   const db = getFirestore();
-  const auth = getAuth();
+  export const auth = getAuth();
 
   // collection ref
   const cartsColRef = collection(db, "carts")
@@ -46,6 +46,7 @@ const firebaseConfig = {
 //TODO: this function spows to get all users
 
   export const aaa = () => {
+    
 //   console.log("allUsers -a-a-a-a-a-", allUsers);
 }
   // let allUsers;
