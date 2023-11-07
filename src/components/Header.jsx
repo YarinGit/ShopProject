@@ -1,31 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaOpencart } from "react-icons/fa";
 import { GrUserManager } from "react-icons/gr";
 import PopupLogIn from "./popupAuth/PopupLogIn";
 import { logExistingUserByEmailAndPassword, signAndLogOut, signIn } from "../firebaseShop";
 import "./css/header.css";
-import useAuthState from "./useAuthState";
+import { userContext } from "../App";
 
 const Header = () => {
   // Popup Log in
-  const [isLogIn, setIsLogIn] = useState(false);
   const [isPopupLogInOpen, setIsPopupLogInOpen] = useState(false);
   const [isPopupSignUpOpen, setIsPopupSignUpOpen] = useState(false);
-  const [user, setUser] = useState(useAuthState());
-console.log("user_user_user_user_user_user", useAuthState());
-console.log("user_user_user_user_user_user", user);
-  useEffect(()=>{
+  const {user, setUser} = useContext(userContext);
 
-console.log("useAuthState happend");
-
-},[useAuthState])
-
-  console.log("isLogIn in Heder - ", isLogIn);
   //#region Sign Auth
   const handleSignOut = () => {
     signAndLogOut();
-    // setIsLogIn(false);
   };
   const handlePopupSignUpOpen = () => {
     setIsPopupSignUpOpen(true);
@@ -41,11 +31,9 @@ console.log("useAuthState happend");
 
     // TODO: adjust this function to do it only after firebase apdate
     if (signUpData != null) {
-      // setIsLogIn(true);
     }
 
     setIsPopupSignUpOpen(false);
-    // setIsLogIn(true);
   };
   //#endregion
   //#region Log Auth
@@ -58,7 +46,6 @@ console.log("useAuthState happend");
       if(logExistingUserByEmailAndPassword(logInData.email, logInData.password))
       {
         console.log("log In seccess: ", logInData);
-        // setIsLogIn(true);
       }
     }
     setIsPopupLogInOpen(false);
@@ -106,7 +93,7 @@ console.log("useAuthState happend");
                 <Link to="/favorite">Favorite</Link>
               </li>
               <li>
-                {isLogIn ? (
+                {!(user == null) ? (
                   <Link onClick={handleSignOut}>Sign out</Link>
                 ) : (
                   <div>

@@ -6,22 +6,24 @@ import Cart from "./components/shoping_cart/pages/cart/Cart";
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { ShopContextProvider } from "./components/shoping_cart/context/ShopContext";
-import { getSnap } from "./firebaseShop";
+import { auth, getSnap } from "./firebaseShop";
 import ContactUs from "./components/contactUs/ContactUs";
 import Favorite from "./components/favorite/Favorite";
 import ManagerPage from "./components/ManagerPage";
-import useAuthState from "./components/useAuthState";
+import { onAuthStateChanged } from "firebase/auth";
 
 // api 1 - https://dummyjson.com/products/search?q=phone
 // api 2 - https://fakestoreapi.com/products
 // api 3 - https://api.storerestapi.com/products
 // api 4 - https://api.escuelajs.co/api/v1/products
+
+
 export const productConext = createContext();
+export const userContext = createContext();
 //#region isLogInConext
 //#endregion
 
     function App() {
-      let user = useAuthState()
   const defineCategoriesList = (data) => {
     let categoriesList = [];
     categoriesList.push(data[0].category);
@@ -51,7 +53,19 @@ export const productConext = createContext();
   // ------------------------------------------------------------------------------------------------------------------------------------
   const [productsArr, setProductsArr] = useState([]);
   const [categoriesList, setCategoriesList] = useState([]);
+  const [user, setUser] = useState({});
+
+  // get current user to all project
+  useEffect(()=>{
+    onAuthStateChanged(auth,(_user) => {
+      console.log("User status changed:", _user);
+      console.log("unsubscribe work");
+      setUser(_user);
+    });
+  },[onAuthStateChanged])
+
   useEffect(() => {
+    // api get products
     const getData = async () => {
       let {data} = await axios.get("https://fakestoreapi.com/products");
       for (let i = 0; i < data.length; i++) { data[i].id = i+1;}
@@ -68,6 +82,7 @@ export const productConext = createContext();
     <div className="container">
       <productConext.Provider value={productsArr}>
         <ShopContextProvider>
+        <userContext.Provider value={{ user, setUser }}>
           <Router>
             <Header />
             <Routes>
@@ -78,6 +93,7 @@ export const productConext = createContext();
               <Route path="/managerPage" element={<ManagerPage />} />
             </Routes>
           </Router>
+          </userContext.Provider>
         </ShopContextProvider>
       </productConext.Provider>
     </div>
