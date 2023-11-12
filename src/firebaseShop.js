@@ -45,10 +45,6 @@ const firebaseConfig = {
 
 //TODO: this function spows to get all users
 
-  export const aaa = () => {
-    
-//   console.log("allUsers -a-a-a-a-a-", allUsers);
-}
   // let allUsers;
   // const listAllUsers = (nextPageToken) => {
   //   // List batch of users, 50 at a time.
@@ -92,69 +88,56 @@ const firebaseConfig = {
     }
   };
   
-  // the carts is undefinde
-  export const getCartUser=()=>{
-    let carts = getDocsFunction();
-    console.log("cartsssss",getDocsFunction());
-    console.log("user",user);
-
-
-    // if() return carts;
-    return {};
-  }
-
-
-
   // getDocs is used to take whats in the collection
-  export const getDocsFunction = async()=>{
-    let carts = [];
-    await getDocs(cartsColRef)
-    .then(snapshot=>{
-      console.log("snapshot.docs", snapshot.docs);
-      snapshot.docs.forEach(doc =>{
-        carts.push({...doc.data(), id:doc.id})
-      })
-      console.log("carts - ", carts);
-    })
-    .catch(error=>{
-      console.log(error.message, "error printed")
-    })
-    return carts;
-  }
+  // export const getCartsFunction = async()=>{
+  //   let carts = [];
+  //   await getDocs(cartsColRef)
+  //   .then(snapshot=>{
+  //     console.log("snapshot.docs", snapshot.docs);
+  //     snapshot.docs.forEach(doc =>{
+  //       carts.push({...doc.data(), id:doc.id})
+  //     })
+  //     console.log("carts - ", carts);
+  //   })
+  //   .catch(error=>{
+  //     console.log(error.message, "error printed")
+  //   })
+  //   return carts;
+  // }
 
-export const createCart=(cartItems)=>{
-  // לעשות שהאיי די של העגלה יהיה האיי די של המשתמש
-let carts = getDocsFunction();
-console.log("carts", carts);
-console.log("carts", carts);
-  try{
-    let clientUid = user.uid;
-    console.log("clientUid", clientUid);
-    addDoc(cartsColRef, {
-        clientUid: clientUid,
-        cartItems: cartItems
-      })
-      .then(()=>console.log("adding is complete"))
-    }
-    catch(error){console.log(error.message)}
+export const updateCart=(cartItems)=>{
+// // let carts = getCartsFunction();
+// console.log("carts", carts);
+// console.log("carts", carts);
+//   try{
+//     let clientUid = user.uid;
+//     console.log("clientUid", clientUid);
+//     addDoc(cartsColRef, {
+//         clientUid: clientUid,
+//         cartItems: cartItems
+//       })
+//       .then(()=>console.log("adding is complete"))
+//     }
+//     catch(error){console.log(error.message)}
+
+
+console.log("cartsColRef", cartsColRef+'/'+user.uid)
+console.log("cartItems", cartItems);
+
 }
-
-  const getListOfUsers = ()=>{
-
-  }
 
   //#endregion
   
   //#region Signing users up
-
-  export const signIn = (logInData)=>{
-    createCart();
+  
+  export const signIn = (logInData, cartItems)=>{
+    // createCart();
     let {email, password} = logInData;
     createUserWithEmailAndPassword(auth, email, password)
     .then((cred) => {
       // After successful sign-up, create a corresponding favorites document
-      const favoritesDocRef = doc(db, "favorites", cred.user.uid);
-      setDoc(favoritesDocRef, { books: [] }); // Initialize favorites as an empty array
+      const cartsDocRef = doc(db, "carts", cred.user.uid);
+      setDoc(cartsDocRef, { items: {...cartItems} }); // Initialize favorites as an empty array
     })
     .catch((error) => {
       console.log(error.message);

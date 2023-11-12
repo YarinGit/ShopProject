@@ -4,7 +4,6 @@ import { ShopContext } from "../../context/ShopContext";
 import CartItem from "./CartItem";
 import "./cart.css";
 import PaypayPay from "./PaypayPay";
-import { aaa, getDocsFunction } from "../../../../firebaseShop";
 
 const Cart = () => {
   const productsArr = useContext(productConext);
@@ -16,7 +15,6 @@ const Cart = () => {
       <div>
         <h1>Your Cart Items</h1>
       </div>
-      <button onClick={aaa} >aaaa</button>
       <div className="cartItems">
         {/* רץ על המערך בודק אם האיבר במקום ה איי די שווה אפס הוא לא מציג אותו */}
         {productsArr.map((product, index) => {

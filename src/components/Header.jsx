@@ -6,12 +6,14 @@ import PopupLogIn from "./popupAuth/PopupLogIn";
 import { logExistingUserByEmailAndPassword, signAndLogOut, signIn } from "../firebaseShop";
 import "./css/header.css";
 import { userContext } from "../App";
+import { ShopContext } from "./shoping_cart/context/ShopContext";
 
 const Header = () => {
   // Popup Log in
   const [isPopupLogInOpen, setIsPopupLogInOpen] = useState(false);
   const [isPopupSignUpOpen, setIsPopupSignUpOpen] = useState(false);
-  const {user, setUser} = useContext(userContext);
+  const { cartItems } = useContext(ShopContext);
+  const {user} = useContext(userContext);
 
   //#region Sign Auth
   const handleSignOut = () => {
@@ -22,10 +24,9 @@ const Header = () => {
   };
   const handlePopupSignUpClose = (signUpData) => {
     if (
-      signUpData !== { email: "", password: "" } &&
       isEmailCorrect(signUpData.email)
     ) {
-      signIn(signUpData);
+      signIn(signUpData, cartItems);
       // console.log("signUpData", signUpData);
     }
 
