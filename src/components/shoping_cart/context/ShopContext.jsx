@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { productConext } from "../../../App";
-import { getDocsFunction, updateCart } from "../../../firebaseShop";
+import { updateCart, getCartOfCurrentUser, auth } from "../../../firebaseShop";
+import { onAuthStateChanged } from "firebase/auth";
 
 export const ShopContext = createContext(null);
 
@@ -9,29 +10,40 @@ export const ShopContextProvider = (props) =>{
   const productArr = useContext(productConext);
   const [cartItems, setCartItems] = useState({});
   
+  useEffect(()=>{
+    onAuthStateChanged(auth,(_user) => {
+      setCartItems(getCartOfCurrentUser(_user.uid));
     
+    console.log("onAuthStateChanged jhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjh");
+    console.log("cartItems", cartItems);
+    });
+  },[onAuthStateChanged])
+
   const addToCart = (itemId) => {
+    let newCart = {};
     if (cartItems[itemId] == null) {
-      setCartItems((prev) => ({ ...prev, [itemId]: 1 }));
+      newCart = { ...cartItems, [itemId]: 1 }
     }
-    else setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
-    updateCart(cartItems);
+    else newCart = { ...cartItems, [itemId]: cartItems[itemId] + 1 };
+    setCartItems(newCart);
+    updateCart(newCart);
     //TODO: check cart
   };
 
   const removeFromCart = (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
-    if (cartItems.itemId <= 0) {
+    let newCart = { ...cartItems, [itemId]: cartItems[itemId] - 1 }
+    if (newCart.itemId <= 0) {
       let updatedCart = cartItems;
       delete updatedCart.itemId;
-      setCartItems(updatedCart);
     }
-    // addAndUpdateCart(cartItems);
+    setCartItems(newCart);
+    updateCart(newCart);
   };
 
   const updateCartItemCount = (newAmount, itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: newAmount }));
-    // addAndUpdateCart(cartItems);
+    let newCart = { ...cartItems, [itemId]: newAmount }
+    setCartItems(newCart);
+    updateCart(newCart);
   };
 
   const getTotalCartAmount = ()=>{

@@ -5,7 +5,7 @@ import Shop from "./components/shoping_cart/pages/shop/Shop";
 import Cart from "./components/shoping_cart/pages/cart/Cart";
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { ShopContextProvider } from "./components/shoping_cart/context/ShopContext";
+import { ShopContext, ShopContextProvider } from "./components/shoping_cart/context/ShopContext";
 import { auth, getSnap } from "./firebaseShop";
 import ContactUs from "./components/contactUs/ContactUs";
 import Favorite from "./components/favorite/Favorite";
@@ -54,7 +54,8 @@ export const userContext = createContext();
   const [productsArr, setProductsArr] = useState([]);
   const [categoriesList, setCategoriesList] = useState([]);
   const [user, setUser] = useState({});
-
+  // const { updateCartOnUserChange } = useContext(ShopContext);
+ 
   // get current user to all project
   useEffect(()=>{
     onAuthStateChanged(auth,(_user) => {

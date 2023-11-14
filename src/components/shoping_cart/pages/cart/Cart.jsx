@@ -7,7 +7,7 @@ import PaypayPay from "./PaypayPay";
 
 const Cart = () => {
   const productsArr = useContext(productConext);
-  const { cartItems, getTotalCartAmount } = useContext(ShopContext);
+  const { cartItems, getTotalCartAmount} = useContext(ShopContext);
   const totalAmount = getTotalCartAmount().toFixed(2);
   console.log("cartItems - ", cartItems);
   return (

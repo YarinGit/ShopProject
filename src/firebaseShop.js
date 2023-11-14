@@ -2,7 +2,7 @@ import {initializeApp } from "firebase/app";
 import { 
     getFirestore, collection, getDocs, onSnapshot,
     doc, setDoc,
-    addDoc, 
+    addDoc, getDoc,
  } from "firebase/firestore";
 
  import { 
@@ -32,7 +32,6 @@ const firebaseConfig = {
   const cartsColRef = collection(db, "carts")
   const adminPasswordColRef = collection(db, "adminPassword")
 
-
   //#region get collection data
   
   // subscribing to auth changes
@@ -42,35 +41,7 @@ const firebaseConfig = {
     user = _user;
   })
 
-
 //TODO: this function spows to get all users
-
-  // let allUsers;
-  // const listAllUsers = (nextPageToken) => {
-  //   // List batch of users, 50 at a time.
-  //   auth
-  //     .listUsers(30, nextPageToken)
-  //     .then((listUsersResult) => {
-  //       listUsersResult.users.forEach((userRecord) => {
-  //         console.log('user', userRecord.toJSON());
-  //       });
-  //       if (listUsersResult.pageToken) {
-  //         // List next batch of users.
-  //         listAllUsers(listUsersResult.pageToken);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log('Error listing users:', error);
-  //     });
-  // };
-  // // Start listing users from the beginning, 1000 at a time.
-  // listAllUsers();
-
-
-
-
-
-
 
   export const getAdminPassword = async () => {
     try {
@@ -106,24 +77,29 @@ const firebaseConfig = {
   // }
 
 export const updateCart=(cartItems)=>{
-// // let carts = getCartsFunction();
-// console.log("carts", carts);
-// console.log("carts", carts);
-//   try{
-//     let clientUid = user.uid;
-//     console.log("clientUid", clientUid);
-//     addDoc(cartsColRef, {
-//         clientUid: clientUid,
-//         cartItems: cartItems
-//       })
-//       .then(()=>console.log("adding is complete"))
-//     }
-//     catch(error){console.log(error.message)}
+      const cartsDocRef = doc(db, "carts", user.uid);
+      setDoc(cartsDocRef, { items: {...cartItems} }); // Initialize favorites as an empty array
+      //TODO: צריך לעשות שכשמעדכן את הדאטאבייס ימחק את הערכים שלא נמצאים במעודכן
 
+    }
 
-console.log("cartsColRef", cartsColRef+'/'+user.uid)
-console.log("cartItems", cartItems);
+export const getCartOfCurrentUser = async(UID)=>{
+  //! check!!!!
+      getDocs(cartsColRef)
+      .then(snapshot=>{
+        console.log("snapshot", snapshot.docs.forEach(doc=>{
+          let currentDoc = doc.data()
+          console.log("doc in forEach", currentDoc, doc.id);
+          if(doc.id === user.uid) {
+            console.log("Equllllllllllllllllllllllllllllllllll");
+            return currentDoc;
+          }
+        }));
+      })
+      .catch(error=>{console.log(error.message)})
+      console.log("not Equllllllllllllllllllllllllllllllllll");
 
+  return {};
 }
 
   //#endregion
