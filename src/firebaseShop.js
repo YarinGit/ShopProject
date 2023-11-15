@@ -84,30 +84,26 @@ export const updateCart=(cartItems)=>{
     }
 
 export const getCartOfCurrentUser = async(UID)=>{
-  //! check!!!!
-      getDocs(cartsColRef)
-      .then(snapshot=>{
-        console.log("snapshot", snapshot.docs.forEach(doc=>{
-          let currentDoc = doc.data()
-          console.log("doc in forEach", currentDoc, doc.id);
-          if(doc.id === user.uid) {
-            console.log("Equllllllllllllllllllllllllllllllllll");
-            return currentDoc;
-          }
-        }));
-      })
-      .catch(error=>{console.log(error.message)})
-      console.log("not Equllllllllllllllllllllllllllllllllll");
+  // this function gets the cart from the database when the user change
+  try {
+    const snapshot = await getDocs(cartsColRef);
 
-  return {};
-}
+    for (const doc of snapshot.docs) {
+      let currentDoc = doc.data();
+      if (doc.id === UID) { return currentDoc.items; }
+    }
+    return {};
+  } catch (error) {
+    console.log(error.message);
+    return {};
+  }
+};
 
   //#endregion
   
   //#region Signing users up
   
   export const signIn = (logInData, cartItems)=>{
-    // createCart();
     let {email, password} = logInData;
     createUserWithEmailAndPassword(auth, email, password)
     .then((cred) => {

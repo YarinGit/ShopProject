@@ -11,11 +11,8 @@ export const ShopContextProvider = (props) =>{
   const [cartItems, setCartItems] = useState({});
   
   useEffect(()=>{
-    onAuthStateChanged(auth,(_user) => {
-      setCartItems(getCartOfCurrentUser(_user.uid));
-    
-    console.log("onAuthStateChanged jhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjh");
-    console.log("cartItems", cartItems);
+     onAuthStateChanged(auth,async(_user) => {
+      setCartItems(await getCartOfCurrentUser(_user?.uid));
     });
   },[onAuthStateChanged])
 
@@ -27,14 +24,14 @@ export const ShopContextProvider = (props) =>{
     else newCart = { ...cartItems, [itemId]: cartItems[itemId] + 1 };
     setCartItems(newCart);
     updateCart(newCart);
-    //TODO: check cart
   };
 
   const removeFromCart = (itemId) => {
     let newCart = { ...cartItems, [itemId]: cartItems[itemId] - 1 }
-    if (newCart.itemId <= 0) {
-      let updatedCart = cartItems;
-      delete updatedCart.itemId;
+    if (newCart[itemId] <= 1) {
+      let updatedCart = newCart;
+      delete updatedCart[itemId];
+      newCart = updatedCart;
     }
     setCartItems(newCart);
     updateCart(newCart);
@@ -42,6 +39,11 @@ export const ShopContextProvider = (props) =>{
 
   const updateCartItemCount = (newAmount, itemId) => {
     let newCart = { ...cartItems, [itemId]: newAmount }
+    if (newCart[itemId] <= 1) {
+      let updatedCart = newCart;
+      delete updatedCart[itemId];
+      newCart = updatedCart;
+    }
     setCartItems(newCart);
     updateCart(newCart);
   };
@@ -68,5 +70,3 @@ export const ShopContextProvider = (props) =>{
     </ShopContext.Provider>
   );
 };
-
-// export default ShopContextProvider

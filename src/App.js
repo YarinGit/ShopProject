@@ -39,14 +39,14 @@ export const userContext = createContext();
         categoriesList.push(currentCategory);
       }
     }
-    console.log("categoriesList - ", categoriesList);
+    // console.log("categoriesList - ", categoriesList);
 
     let newCategoriesList = [];
     categoriesList.map((item) => {
       newCategoriesList.push({ value: item, label: item });
     });
 
-    console.log("newCategoriesList - ", newCategoriesList);
+    // console.log("newCategoriesList - ", newCategoriesList);
 
     return newCategoriesList;
   };
@@ -60,7 +60,6 @@ export const userContext = createContext();
   useEffect(()=>{
     onAuthStateChanged(auth,(_user) => {
       console.log("User status changed:", _user);
-      console.log("unsubscribe work");
       setUser(_user);
     });
   },[onAuthStateChanged])
@@ -77,7 +76,7 @@ export const userContext = createContext();
     getData();
   }, []);
 
-  console.log("categoriesList - final", categoriesList);
+  // console.log("categoriesList - final", categoriesList);
   const putInFirebase = (data) => {};
   return (
     <div className="container">
