@@ -54,7 +54,6 @@ export const userContext = createContext();
   const [productsArr, setProductsArr] = useState([]);
   const [categoriesList, setCategoriesList] = useState([]);
   const [user, setUser] = useState({});
-  // const { updateCartOnUserChange } = useContext(ShopContext);
  
   // get current user to all project
   useEffect(()=>{
@@ -76,8 +75,6 @@ export const userContext = createContext();
     getData();
   }, []);
 
-  // console.log("categoriesList - final", categoriesList);
-  const putInFirebase = (data) => {};
   return (
     <div className="container">
       <productConext.Provider value={productsArr}>

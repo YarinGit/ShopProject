@@ -7,7 +7,7 @@ import PaypayPay from "./PaypayPay";
 
 const Cart = () => {
   const productsArr = useContext(productConext);
-  const { cartItems, getTotalCartAmount} = useContext(ShopContext);
+  const { cartItems, clearCart, getTotalCartAmount} = useContext(ShopContext);
   const totalAmount = getTotalCartAmount().toFixed(2);
   console.log("cartItems - ", cartItems);
   return (
@@ -24,6 +24,7 @@ const Cart = () => {
         })}
         {totalAmount>0? 
         <div className="checkout">
+          <button onClick={()=>clearCart()} >Clear Cart</button>
           <h4> Subtotal: {totalAmount} &#8362;</h4>
           <PaypayPay clientId={"test"} amount={totalAmount} />
         </div>:

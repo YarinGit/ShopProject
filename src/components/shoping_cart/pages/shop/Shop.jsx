@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import BoxProdact from './BoxProdact';
 import { productConext } from '../../../../App';
 import Select from 'react-select';
-import { getAdminPassword } from '../../../../firebaseShop';
 import "./shop.css";
 
 
@@ -37,9 +36,7 @@ const Shop = (categoriesList) => {
   }, [chosenCategories])
   return (
     <div className="container">
-    <button onClick={()=>{
-      getAdminPassword()
-    }} >clice here </button>
+    
       {/* serching in product */}
       <input placeholder='serch product..' type="text" onChange={(event)=>{
         setSerchingText(event.target.value)

@@ -30,7 +30,6 @@ const firebaseConfig = {
 
   // collection ref
   const cartsColRef = collection(db, "carts")
-  const adminPasswordColRef = collection(db, "adminPassword")
 
   //#region get collection data
   
@@ -41,23 +40,48 @@ const firebaseConfig = {
     user = _user;
   })
 
-//TODO: this function spows to get all users
-
-  export const getAdminPassword = async () => {
+  export const setAdmin = (currentManagers, newAdmin)=>{
+    //! הפונקציה הזאת שמה אובייקט חדש כל פעם במקום לשנות את הישן
     try {
-      const snapshot = await getDocs(adminPasswordColRef); 
-      if (snapshot.docs.length > 0) {
-        const { password } = snapshot.docs[0].data();
-        return password;
-      } else {
-        throw new Error("No admin password found"); // Handle the case where no password is found
-      }
+      let newObj = {...currentManagers, newAdmin}
+      const document = doc(db, "admins", "admins")
+      setDoc(document, {emails:{...newObj}}); 
+  
     } catch (error) {
-      console.error(error.message);
-      alert(error.message);
-      throw error; // Rethrow the error to handle it at a higher level if needed
+      console.log(error.message);
     }
-  };
+    
+  }
+
+  export const getCollectionByName = async(collectionName)=>{
+    try {
+      const currentCollection = collection(db, collectionName)
+    const snapshot = await getDocs(currentCollection);
+
+    const data = snapshot.docs.map(doc=>doc.data())
+
+    return data;
+
+      
+    } catch (error) {console.log(error.message)}
+    return {}
+  }
+
+  // export const getAdminPassword = async () => {
+  //   try {
+  //     const snapshot = await getDocs(adminPasswordColRef); 
+  //     if (snapshot.docs.length > 0) {
+  //       const { password } = snapshot.docs[0].data();
+  //       return password;
+  //     } else {
+  //       throw new Error("No admin password found"); // Handle the case where no password is found
+  //     }
+  //   } catch (error) {
+  //     console.error(error.message);
+  //     alert(error.message);
+  //     throw error; // Rethrow the error to handle it at a higher level if needed
+  //   }
+  // };
   
   // getDocs is used to take whats in the collection
   // export const getCartsFunction = async()=>{
@@ -78,7 +102,7 @@ const firebaseConfig = {
 
 export const updateCart=(cartItems)=>{
       const cartsDocRef = doc(db, "carts", user.uid);
-      setDoc(cartsDocRef, { items: {...cartItems} }); // Initialize favorites as an empty array
+      setDoc(cartsDocRef, { items: {...cartItems} }); 
       //TODO: צריך לעשות שכשמעדכן את הדאטאבייס ימחק את הערכים שלא נמצאים במעודכן
 
     }
