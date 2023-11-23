@@ -43,23 +43,20 @@ const firebaseConfig = {
   export const setAdmin = (currentManagers, newAdmin)=>{
     //! הפונקציה הזאת שמה אובייקט חדש כל פעם במקום לשנות את הישן
     try {
-      let newObj = {...currentManagers, newAdmin}
       const document = doc(db, "admins", "admins")
-      setDoc(document, {emails:{...newObj}}); 
-  
+      setDoc(document, {...currentManagers, [newAdmin]:true});
+
     } catch (error) {
       console.log(error.message);
     }
     
   }
 
-  export const getCollectionByName = async(collectionName)=>{
+  export const getAdmins = async()=>{
     try {
-      const currentCollection = collection(db, collectionName)
-    const snapshot = await getDocs(currentCollection);
-
-    const data = snapshot.docs.map(doc=>doc.data())
-
+    const snapshot = await getDocs(collection(db, "admins"));
+    console.log("snapshot",snapshot.docs[0].data());
+    const data = snapshot.docs[0].data();
     return data;
 
       

@@ -9,7 +9,7 @@ import { ShopContext, ShopContextProvider } from "./components/shoping_cart/cont
 import { auth, getSnap } from "./firebaseShop";
 import ContactUs from "./components/contactUs/ContactUs";
 import Favorite from "./components/favorite/Favorite";
-import ManagerPage from "./components/ManagerPage";
+import ManagerPage from "./components/managerPage/ManagerPage";
 import { onAuthStateChanged } from "firebase/auth";
 
 // api 1 - https://dummyjson.com/products/search?q=phone
