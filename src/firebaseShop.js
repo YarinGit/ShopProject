@@ -40,25 +40,35 @@ const firebaseConfig = {
     user = _user;
   })
 
-  export const setAdmin = (currentManagers, newAdmin)=>{
-    //! הפונקציה הזאת שמה אובייקט חדש כל פעם במקום לשנות את הישן
+  const updateAdmins=(admins)=>{
+    const document = doc(db, "admins", "admins")
+    setDoc(document, { ...admins }); 
+  }
+
+  export const deleteAdmin = async(admin)=>{
     try {
+      let managers = await getAdmins();
+      delete managers[admin]
+      alert("Mission complete! -> Please refresh")
+      updateAdmins(managers)
+    } catch (error) {console.log(error.message)}
+  }
+  export const setAdmin = async(newAdmin)=>{
+    try {
+      const currentManagers = await getAdmins()
       const document = doc(db, "admins", "admins")
       setDoc(document, {...currentManagers, [newAdmin]:true});
 
     } catch (error) {
       console.log(error.message);
     }
-    
   }
 
   export const getAdmins = async()=>{
     try {
     const snapshot = await getDocs(collection(db, "admins"));
-    console.log("snapshot",snapshot.docs[0].data());
     const data = snapshot.docs[0].data();
     return data;
-
       
     } catch (error) {console.log(error.message)}
     return {}
@@ -100,8 +110,6 @@ const firebaseConfig = {
 export const updateCart=(cartItems)=>{
       const cartsDocRef = doc(db, "carts", user.uid);
       setDoc(cartsDocRef, { items: {...cartItems} }); 
-      //TODO: צריך לעשות שכשמעדכן את הדאטאבייס ימחק את הערכים שלא נמצאים במעודכן
-
     }
 
 export const getCartOfCurrentUser = async(UID)=>{
