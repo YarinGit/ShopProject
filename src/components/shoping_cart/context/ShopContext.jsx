@@ -7,7 +7,7 @@ export const ShopContext = createContext(null);
 
 export const ShopContextProvider = (props) =>{
   
-  const productArr = useContext(productConext);
+  const {productArr} = useContext(productConext);
   const [cartItems, setCartItems] = useState({});
   
   useEffect(()=>{
@@ -28,7 +28,7 @@ export const ShopContextProvider = (props) =>{
 
   const removeFromCart = (itemId) => {
     let newCart = { ...cartItems, [itemId]: cartItems[itemId] - 1 }
-    if (newCart[itemId] <= 1) {
+    if (newCart[itemId] < 1) {
       let updatedCart = newCart;
       delete updatedCart[itemId];
       newCart = updatedCart;

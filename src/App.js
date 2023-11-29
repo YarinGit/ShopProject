@@ -51,7 +51,7 @@ export const userContext = createContext();
     return newCategoriesList;
   };
   // ------------------------------------------------------------------------------------------------------------------------------------
-  const [productsArr, setProductsArr] = useState([]);
+  const [productsArr, setProductsArr] = useState([{title:"1",image:"11", description:"111"},{title:"2",image:"22", description:"222"},{title:"3",image:"33", description:"333"},]);
   const [categoriesList, setCategoriesList] = useState([]);
   const [user, setUser] = useState({});
  
@@ -77,7 +77,7 @@ export const userContext = createContext();
 
   return (
     <div className="container">
-      <productConext.Provider value={productsArr}>
+      <productConext.Provider value={{productsArr, setProductsArr}}>
         <ShopContextProvider>
         <userContext.Provider value={{ user, setUser }}>
           <Router>

@@ -74,38 +74,18 @@ const firebaseConfig = {
     return {}
   }
 
-  // export const getAdminPassword = async () => {
-  //   try {
-  //     const snapshot = await getDocs(adminPasswordColRef); 
-  //     if (snapshot.docs.length > 0) {
-  //       const { password } = snapshot.docs[0].data();
-  //       return password;
-  //     } else {
-  //       throw new Error("No admin password found"); // Handle the case where no password is found
-  //     }
-  //   } catch (error) {
-  //     console.error(error.message);
-  //     alert(error.message);
-  //     throw error; // Rethrow the error to handle it at a higher level if needed
-  //   }
-  // };
-  
-  // getDocs is used to take whats in the collection
-  // export const getCartsFunction = async()=>{
-  //   let carts = [];
-  //   await getDocs(cartsColRef)
-  //   .then(snapshot=>{
-  //     console.log("snapshot.docs", snapshot.docs);
-  //     snapshot.docs.forEach(doc =>{
-  //       carts.push({...doc.data(), id:doc.id})
-  //     })
-  //     console.log("carts - ", carts);
-  //   })
-  //   .catch(error=>{
-  //     console.log(error.message, "error printed")
-  //   })
-  //   return carts;
-  // }
+  export const getAllProdacts = async()=>{
+    try {
+    const snapshot = await getDocs(collection(db, "products"));
+    const data = [];
+    for (let i = 0; i < snapshot.docs.length; i++) {
+      data.push(snapshot.docs[i].data());
+    }
+    return data;
+      
+    } catch (error) {console.log(error.message)}
+    return {}
+  }
 
 export const updateCart=(cartItems)=>{
       const cartsDocRef = doc(db, "carts", user.uid);

@@ -1,24 +1,24 @@
 import React, { useContext, useEffect, useState } from "react";
-import { getAdmins, setAdmin } from "../../firebaseShop";
+import { getAdmins, getAllProdacts, setAdmin } from "../../firebaseShop";
 import { userContext } from "../../App";
 import ManagrtRow from "./ManagrtRow";
 
 const ManagerPage = () => {
   const [addManagerInput, setAddManagerInput] = useState("");
-  const [isManager, setIsManager] = useState(false);
+  const [isManager, setIsManager] = useState(true);
   const [allManagers, setAllManagers] = useState([]);
   const { user } = useContext(userContext);
 
-  useEffect(()=>{
-    setIsManager(isCurrentUserManager());
-  },[user])
-  const isCurrentUserManager=()=>{
-    for (let i = 0; i < allManagers.length; i++) {
-      if(user?.email == allManagers[i])return true;
-
-    }
-      return false;
-    }
+  // Determines if current user can be in manager page
+  // useEffect(()=>{
+  //   setIsManager(isCurrentUserManager());
+  // },[user])
+  // const isCurrentUserManager=()=>{
+  //   for (let i = 0; i < allManagers.length; i++) {
+  //     if(user?.email == allManagers[i])return true;
+  //   }
+  //     return false;
+  //   }
   
   useEffect(() => {
     getAllManagersArr();
@@ -33,7 +33,6 @@ const ManagerPage = () => {
   };
 
   const getAllManagersArr = async () => {
-    //TODO: add here sort by a,b,c
     let currentManagers = await getAdmins();
     let newArr = Object.keys(currentManagers);
     newArr = sortManagers(newArr)
@@ -44,7 +43,7 @@ const ManagerPage = () => {
     setAddManagerInput(e.target.value)
   }
   const handleButtonAddManager = ()=>{
-    setAdmin(addManagerInput)
+    setAdmin(addManagerInput.toLowerCase())
     alert(addManagerInput, " - added");
     setAddManagerInput("");
     getAllManagersArr()
@@ -55,7 +54,9 @@ const ManagerPage = () => {
     const sortedManagers = [...arr].sort((a, b) => a.localeCompare(b));
     return sortedManagers;
   };
-
+  const handelePrintUserBtn = async(arr) => {
+    return await getAllProdacts()
+  }
 
   return (
     <div>
@@ -76,8 +77,11 @@ const ManagerPage = () => {
             <hr/>
           <div className="Product">
             <h3>Add & Delete Product</h3>
-            <button onClick={()=>{console.log("isCurrentUserManager",isCurrentUserManager())}} >print user</button>
-
+            <button onClick={()=>{
+              getAllProdacts().then(data=>{
+                console.log("data",data)
+              })
+              }} >print user</button>
           </div>
         </div>
       ) : (
@@ -88,5 +92,7 @@ const ManagerPage = () => {
     </div>
   );
 };
+
+
 
 export default ManagerPage;
