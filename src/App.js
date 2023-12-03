@@ -70,6 +70,7 @@ export const userContext = createContext();
       for (let i = 0; i < data.length; i++) { data[i].id = i+1;}
       console.log("data - ", data);
       setCategoriesList(defineCategoriesList(data))
+      // setProductsArr({...data, ...productsArr});
       setProductsArr(data);
     };
     getData();

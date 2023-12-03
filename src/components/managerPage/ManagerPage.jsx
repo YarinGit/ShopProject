@@ -1,10 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import { getAdmins, getAllProdacts, setAdmin } from "../../firebaseShop";
+import { addProduct, getAdmins, getAllProdacts, setAdmin } from "../../firebaseShop";
 import { userContext } from "../../App";
 import ManagrtRow from "./ManagrtRow";
 
 const ManagerPage = () => {
   const [addManagerInput, setAddManagerInput] = useState("");
+  const [addProductTitleInput, setAddProductTitleInput] = useState("");
+  const [addProductCategoryInput, setAddProductCategoryInput] = useState("");
+  const [addProductDescriptionInput, setAddProductDescriptionInput] = useState("");
+  const [addProductImageInput, setAddProductImageInput] = useState("");
+  const [addProductPriceInput, setAddProductPriceInput] = useState(0);
   const [isManager, setIsManager] = useState(true);
   const [allManagers, setAllManagers] = useState([]);
   const { user } = useContext(userContext);
@@ -42,6 +47,28 @@ const ManagerPage = () => {
   const handleInputAddManagerChange = (e)=>{
     setAddManagerInput(e.target.value)
   }
+  const handleAddProductTitleInput = (e)=>{
+    setAddProductTitleInput(e.target.value)
+  }
+  const handleAddProduCtategoryInput = (e)=>{
+    setAddProductCategoryInput(e.target.value)
+  }
+  const handleAddProduDescriptionInput = (e)=>{
+    setAddProductDescriptionInput(e.target.value)
+  }
+  const handleAddProduImageInput = (e)=>{
+    setAddProductImageInput(e.target.value)
+  }
+  const handleAddProduPriceInput = (e)=>{
+    setAddProductPriceInput(e.target.value)
+  }
+  const handleAddProductButton=()=>{
+    addProduct(addProductTitleInput,
+      addProductCategoryInput,
+      addProductDescriptionInput,
+      addProductImageInput,
+      addProductPriceInput)
+  }
   const handleButtonAddManager = ()=>{
     setAdmin(addManagerInput.toLowerCase())
     alert(addManagerInput, " - added");
@@ -76,12 +103,31 @@ const ManagerPage = () => {
           </div>
             <hr/>
           <div className="Product">
-            <h3>Add & Delete Product</h3>
+            <h2>Add & Delete Product</h2>
+
+            <h3>Add product</h3>
+
+            <h4>Title:</h4>
+            <input value={addProductTitleInput} type="text" onChange={handleAddProductTitleInput} />
+
+            <h4>Category:</h4>
+            <input value={addProductCategoryInput} type="text" onChange={handleAddProduCtategoryInput} />
+
+            <h4>Description:</h4>
+            <input value={addProductDescriptionInput} type="text" onChange={handleAddProduDescriptionInput} />
+
+            <h4>Image:</h4>
+            <input value={addProductImageInput} type="text" onChange={handleAddProduImageInput} />
+
+            <h4>Price:</h4>
+            <input value={addProductPriceInput} type="number" onChange={handleAddProduPriceInput} />
+
+            <button onClick={handleAddProductButton} >Add Product</button>
+
             <button onClick={()=>{
               getAllProdacts().then(data=>{
-                console.log("data",data)
-              })
-              }} >print user</button>
+                console.log("data",data)})}} >print Products</button>
+
           </div>
         </div>
       ) : (

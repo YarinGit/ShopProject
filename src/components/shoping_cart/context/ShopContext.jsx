@@ -7,7 +7,7 @@ export const ShopContext = createContext(null);
 
 export const ShopContextProvider = (props) =>{
   
-  const {productArr} = useContext(productConext);
+  const {productsArr} = useContext(productConext);
   const [cartItems, setCartItems] = useState({});
   
   useEffect(()=>{
@@ -56,7 +56,7 @@ export const ShopContextProvider = (props) =>{
   const getTotalCartAmount = ()=>{
     let totalAmount = 0;
     for (const item in cartItems) {
-        let itemInfo = productArr.find(product=>product.id=== Number(item))
+        let itemInfo = productsArr.find(product=>product.id=== Number(item))
         totalAmount+= cartItems[item]*itemInfo.price;
     }
     return totalAmount;

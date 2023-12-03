@@ -87,6 +87,16 @@ const firebaseConfig = {
     return {}
   }
 
+export const addProduct=(title,category,description,image,price)=>{
+  //TODO: add here a uniqe id to the new product
+  try {
+    const productDocRef = doc(db, "products", "products");
+    setDoc(productDocRef, { products: {title:title, category:category, description:description, image:image, price:price} },{ merge: true }); 
+
+  } catch (error) {console.log(error.message)}
+    }
+
+
 export const updateCart=(cartItems)=>{
       const cartsDocRef = doc(db, "carts", user.uid);
       setDoc(cartsDocRef, { items: {...cartItems} }); 
