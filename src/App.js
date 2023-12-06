@@ -6,7 +6,7 @@ import Cart from "./components/shoping_cart/pages/cart/Cart";
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { ShopContext, ShopContextProvider } from "./components/shoping_cart/context/ShopContext";
-import { auth, getSnap } from "./firebaseShop";
+import { auth, getAllProdacts, getSnap } from "./firebaseShop";
 import ContactUs from "./components/contactUs/ContactUs";
 import Favorite from "./components/favorite/Favorite";
 import ManagerPage from "./components/managerPage/ManagerPage";
@@ -67,6 +67,14 @@ export const userContext = createContext();
     // api get products
     const getData = async () => {
       let {data} = await axios.get("https://fakestoreapi.com/products");
+      const dataFromFirebase = await getAllProdacts()
+      let temp = [...data, ...dataFromFirebase];
+      data = temp;
+      console.log("data -> ", data);
+      console.log("dataFromFirebase -> ", dataFromFirebase);
+      // for (let i = 0; i < dataFromFirebase.length; i++) {
+      //   data.push({...dataFromFirebase[i]})
+      // }
       for (let i = 0; i < data.length; i++) { data[i].id = i+1;}
       console.log("data - ", data);
       setCategoriesList(defineCategoriesList(data))

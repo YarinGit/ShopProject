@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { addProduct, getAdmins, getAllProdacts, setAdmin } from "../../firebaseShop";
-import { userContext } from "../../App";
+import { productConext, userContext } from "../../App";
 import ManagrtRow from "./ManagrtRow";
 
 const ManagerPage = () => {
@@ -12,6 +12,7 @@ const ManagerPage = () => {
   const [addProductPriceInput, setAddProductPriceInput] = useState(0);
   const [isManager, setIsManager] = useState(true);
   const [allManagers, setAllManagers] = useState([]);
+  const {productsArr} = useContext(productConext);
   const { user } = useContext(userContext);
 
   // Determines if current user can be in manager page
@@ -63,11 +64,13 @@ const ManagerPage = () => {
     setAddProductPriceInput(e.target.value)
   }
   const handleAddProductButton=()=>{
+    let newId = (productsArr.length != null)?productsArr.length:1;
     addProduct(addProductTitleInput,
       addProductCategoryInput,
       addProductDescriptionInput,
       addProductImageInput,
-      addProductPriceInput)
+      addProductPriceInput,
+      newId)
   }
   const handleButtonAddManager = ()=>{
     setAdmin(addManagerInput.toLowerCase())

@@ -76,10 +76,12 @@ const firebaseConfig = {
 
   export const getAllProdacts = async()=>{
     try {
-    const snapshot = await getDocs(collection(db, "products"));
-    const data = [];
-    for (let i = 0; i < snapshot.docs.length; i++) {
-      data.push(snapshot.docs[i].data());
+    const snapshot = await getDoc(doc(db, "products", "products"));
+    let data = [];
+    let a = snapshot.data()
+    console.log("snapshot", a.products);
+    for (let i = 0; i < a.products.length; i++) {
+      data.push(a.products[i]);
     }
     return data;
       
@@ -87,12 +89,13 @@ const firebaseConfig = {
     return {}
   }
 
-export const addProduct=(title,category,description,image,price)=>{
-  //TODO: add here a uniqe id to the new product
+export const addProduct=async(title,category,description,image,price,id)=>{
   try {
+    // let prevProductsArray = await getAllProdacts();
+    // prevProductsArray.push()
     const productDocRef = doc(db, "products", "products");
-    setDoc(productDocRef, { products: {title:title, category:category, description:description, image:image, price:price} },{ merge: true }); 
-
+    setDoc(productDocRef, { products: [{title:title, category:category, description:description, image:image, price:price, id:id}] },{merge:true}); 
+    alert(title + " -> is added")
   } catch (error) {console.log(error.message)}
     }
 
