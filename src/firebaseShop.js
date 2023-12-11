@@ -89,16 +89,29 @@ const firebaseConfig = {
     return {}
   }
 
-export const addProduct=async(title,category,description,image,price,id)=>{
+export const addProduct=async(title,category,description,image,price)=>{
   try {
-    // let prevProductsArray = await getAllProdacts();
-    // prevProductsArray.push()
+    let prevProductsArray = await getAllProdacts();
+    let newId = (prevProductsArray.length != null)?prevProductsArray.length + 1 : 1 ;
+    console.log("prevProductsArray -> ", prevProductsArray, "type -> ",typeof(prevProductsArray));
+    prevProductsArray.push({title:title, category:category, description:description, image:image, price:price, id:newId})
     const productDocRef = doc(db, "products", "products");
-    setDoc(productDocRef, { products: [{title:title, category:category, description:description, image:image, price:price, id:id}] },{merge:true}); 
+    setDoc(productDocRef, { products: prevProductsArray }); 
     alert(title + " -> is added")
   } catch (error) {console.log(error.message)}
     }
 
+export const removeProduct=async(id)=>{
+  // להשלים פה הורדת מוצר ולעשות רשימה של כל המוצרים כמו שיש של כל המנהלים
+  // לעשות גם מחיקה של יוזרים בדף המנהל
+  try {
+    let prevProductsArray = await getAllProdacts();
+    console.log("prevProductsArray -> ", prevProductsArray, "type -> ",typeof(prevProductsArray));
+    const productDocRef = doc(db, "products", "products");
+    setDoc(productDocRef, { products: prevProductsArray }); 
+    alert("Product nunber: "+id+" is removed")
+  } catch (error) {console.log(error.message)}
+    }
 
 export const updateCart=(cartItems)=>{
       const cartsDocRef = doc(db, "carts", user.uid);

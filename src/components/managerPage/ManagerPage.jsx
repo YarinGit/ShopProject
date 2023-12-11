@@ -63,14 +63,12 @@ const ManagerPage = () => {
   const handleAddProduPriceInput = (e)=>{
     setAddProductPriceInput(e.target.value)
   }
-  const handleAddProductButton=()=>{
-    let newId = (productsArr.length != null)?productsArr.length:1;
-    addProduct(addProductTitleInput,
+  const handleAddProductButton=async()=>{
+    await addProduct(addProductTitleInput,
       addProductCategoryInput,
       addProductDescriptionInput,
       addProductImageInput,
-      addProductPriceInput,
-      newId)
+      addProductPriceInput)
   }
   const handleButtonAddManager = ()=>{
     setAdmin(addManagerInput.toLowerCase())
