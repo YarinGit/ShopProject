@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import { addProduct, getAdmins, getAllProdacts, setAdmin } from "../../firebaseShop";
+import { addProduct, getAdmins, getAllProdacts, removeProduct, setAdmin } from "../../firebaseShop";
 import { productConext, userContext } from "../../App";
 import ManagrtRow from "./ManagrtRow";
+import { Input } from "@mui/material";
 
 const ManagerPage = () => {
   const [addManagerInput, setAddManagerInput] = useState("");
@@ -9,6 +10,7 @@ const ManagerPage = () => {
   const [addProductCategoryInput, setAddProductCategoryInput] = useState("");
   const [addProductDescriptionInput, setAddProductDescriptionInput] = useState("");
   const [addProductImageInput, setAddProductImageInput] = useState("");
+  const [serchForDeleteInput, setSerchForDeleteInput] = useState("");
   const [addProductPriceInput, setAddProductPriceInput] = useState(0);
   const [isManager, setIsManager] = useState(true);
   const [allManagers, setAllManagers] = useState([]);
@@ -86,6 +88,14 @@ const ManagerPage = () => {
     return await getAllProdacts()
   }
 
+  const handleSerchForDeletefunction = (e)=>{
+    setSerchForDeleteInput(e.target.value);
+  }
+  const handleSerchForDeleteButton=()=>{
+    console.log(serchForDeleteInput);
+    removeProduct(serchForDeleteInput)
+  }
+
   return (
     <div>
       {isManager ? (
@@ -97,10 +107,6 @@ const ManagerPage = () => {
             <hr/>
             {allManagers.map((item, index)=> <ManagrtRow email={item} deleteFunction={onManagerDeleted} key={index}/>)}
             <hr/>
-              {/* <button onClick={() => {console.log("isUserManager ->", isUserManager());}}>Log managers</button> */}
-              {/* <button onClick={() => {console.log("setAdmin ->",setAdmin("aaaa@gmail.com"));}}>Log setAdmin</button> */}
-              {/* <button onClick={getAllManagersArr}>Get managers</button> */}
-              {/* <button onClick={getAdmins}>adminssssssss</button> */}
           </div>
             <hr/>
           <div className="Product">
@@ -129,6 +135,9 @@ const ManagerPage = () => {
               getAllProdacts().then(data=>{
                 console.log("data",data)})}} >print Products</button>
 
+            <h3>Delete product</h3>
+            <Input type="text" name="serchForDelete" onChange={handleSerchForDeletefunction} value={serchForDeleteInput} placeholder="Serch by ID" />
+            <button onClick={handleSerchForDeleteButton} >Serch</button>
           </div>
         </div>
       ) : (

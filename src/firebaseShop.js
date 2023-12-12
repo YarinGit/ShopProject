@@ -106,7 +106,8 @@ export const removeProduct=async(id)=>{
   // לעשות גם מחיקה של יוזרים בדף המנהל
   try {
     let prevProductsArray = await getAllProdacts();
-    console.log("prevProductsArray -> ", prevProductsArray, "type -> ",typeof(prevProductsArray));
+    console.log("prevProductsArray[id] -> ", prevProductsArray[id]);
+    prevProductsArray.splice(id-1, 1);
     const productDocRef = doc(db, "products", "products");
     setDoc(productDocRef, { products: prevProductsArray }); 
     alert("Product nunber: "+id+" is removed")
@@ -179,4 +180,17 @@ export const getCartOfCurrentUser = async(UID)=>{
   }
 //#endregion
 
+  export const PUT_ALL_DATA_FROM_API_TO_FIREBASE=async(array)=>{
+        //TODO: להשים את בפונקציה הזאת בהערה ולא למחוק כשאני מסיים
+        try {
+          const currentArr = await getAllProdacts();
+          console.log("currentArr befor => ",currentArr);
+          for (let i = 0; i < array.length; i++) {
+
+          }
+          console.log("currentArr after => ",currentArr);
+
+        } catch (error) { console.log(error.message) }
+
         
+  }
