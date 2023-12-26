@@ -18,6 +18,8 @@ https://firebase.google.com/docs/auth/admin/custom-claims
 * לשנות את כל הצורה שבה עובד הצורה של האיי די במוצרים
 * 
 
+העגלה לא עובדת כשמשתמשים במוצרים מפיירבייס
+
 
 
 

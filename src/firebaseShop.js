@@ -31,6 +31,9 @@ const firebaseConfig = {
   // collection ref
   const cartsColRef = collection(db, "carts")
 
+  // doc ref
+  const productsRef = doc(db, "products", "products");
+
   //#region get collection data
   
   // subscribing to auth changes
@@ -76,7 +79,7 @@ const firebaseConfig = {
 
   export const getAllProdacts = async()=>{
     try {
-    const snapshot = await getDoc(doc(db, "products", "products"));
+    const snapshot = await getDoc(productsRef);
     let data = [];
     let a = snapshot.data()
     console.log("snapshot", a.products);
@@ -91,26 +94,32 @@ const firebaseConfig = {
 
 export const addProduct=async(title,category,description,image,price)=>{
   try {
+    // price = Number(price);
     let prevProductsArray = await getAllProdacts();
-    let newId = (prevProductsArray.length != null)?prevProductsArray.length + 1 : 1 ;
+    let newId = (prevProductsArray.length != null)?prevProductsArray.id + 1 : 1 ;
     console.log("prevProductsArray -> ", prevProductsArray, "type -> ",typeof(prevProductsArray));
     prevProductsArray.push({title:title, category:category, description:description, image:image, price:price, id:newId})
-    const productDocRef = doc(db, "products", "products");
+    const productDocRef = productsRef;
+    console.log("productDocRef -> ",productDocRef);
+    console.log("prevProductsArray -> ",prevProductsArray, "type -> ", typeof(prevProductsArray));
     setDoc(productDocRef, { products: prevProductsArray }); 
     alert(title + " -> is added")
-  } catch (error) {console.log(error.message)}
+  } catch (error) {
+    alert(error.message)
+    console.log(error.message)}
     }
 
 export const removeProduct=async(id)=>{
   // להשלים פה הורדת מוצר ולעשות רשימה של כל המוצרים כמו שיש של כל המנהלים
   // לעשות גם מחיקה של יוזרים בדף המנהל
   try {
+    //! לבדוק
     let prevProductsArray = await getAllProdacts();
     console.log("prevProductsArray[id] -> ", prevProductsArray[id]);
-    prevProductsArray.splice(id-1, 1);
-    const productDocRef = doc(db, "products", "products");
+    prevProductsArray.splice(id, 1);
+    const productDocRef = productsRef;
     setDoc(productDocRef, { products: prevProductsArray }); 
-    alert("Product nunber: "+id+" is removed")
+    alert("Product nunber: "+(id+1)+" is removed")
   } catch (error) {console.log(error.message)}
     }
 
@@ -121,18 +130,45 @@ export const updateCart=(cartItems)=>{
 
 export const getCartOfCurrentUser = async(UID)=>{
   // this function gets the cart from the database when the user change
+  let cart = {};
+  const carts = await getDocs(cartsColRef);
   try {
-    const snapshot = await getDocs(cartsColRef);
-
-    for (const doc of snapshot.docs) {
+    
+    for (const doc of carts.docs) {
+      console.log("doc -> ", doc);
       let currentDoc = doc.data();
-      if (doc.id === UID) { return currentDoc.items; }
+      if (doc.id === UID) { cart = currentDoc.items; }
     }
-    return {};
   } catch (error) {
     console.log(error.message);
     return {};
   }
+  console.log("cart -> ", cart);
+
+  let keysOfCart = Object.keys(cart);
+  console.log("keysOfCart.length", keysOfCart.length);
+  let products = await getAllProdacts();
+
+  for (let i = 0; i < keysOfCart.length; i++) {
+    let isExist = false;
+    console.log("iiiii -> ", i);
+    console.log("products[cart.id] -> ", keysOfCart[i], cart[keysOfCart[i]]);
+    if (products[cart[keysOfCart[i]]] == null) {
+      console.log("cart.id", cart.id);
+      console.log("true true true ");
+    }
+
+
+
+    if (i<cart.length) {
+      if (products.id == cart.id) {
+        isExist = true;
+        continue;
+      }
+    }
+  }
+
+  return cart;
 };
 
   //#endregion
@@ -183,14 +219,10 @@ export const getCartOfCurrentUser = async(UID)=>{
   export const PUT_ALL_DATA_FROM_API_TO_FIREBASE=async(array)=>{
         //TODO: להשים את בפונקציה הזאת בהערה ולא למחוק כשאני מסיים
         try {
-          const currentArr = await getAllProdacts();
-          console.log("currentArr befor => ",currentArr);
+          console.log("in add array -> ", array);
           for (let i = 0; i < array.length; i++) {
-
+            await addProduct(array[i].title, array[i].category, array[i].description, array[i].image, array[i].price)
           }
-          console.log("currentArr after => ",currentArr);
 
         } catch (error) { console.log(error.message) }
-
-        
   }

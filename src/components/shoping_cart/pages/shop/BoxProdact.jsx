@@ -3,9 +3,12 @@ import "./boxProduct.css";
 import { TbShoppingCartPlus } from "react-icons/tb";
 import { ShopContext } from "../../context/ShopContext";
 
-const BoxProdact = ({ title, description, image, price, id, serchingText }) => {
+const BoxProdact = ({ title, description, image, price, id }) => {
   let maxLengthDescription = 350;
-
+  // if (typeof(price) !="number") {
+  //   console.log("typeof(price)", typeof(price));
+  //   price = 0;
+  // }
   if ( typeof(description) == typeof("") && description != "") {
   description = description.slice(0,maxLengthDescription);
   }
@@ -33,6 +36,7 @@ const BoxProdact = ({ title, description, image, price, id, serchingText }) => {
             <TbShoppingCartPlus color="text-black-50" size={35} />
           </a>
         </div>
+        <p> id {id}</p>
       </div>
     </div>
   );

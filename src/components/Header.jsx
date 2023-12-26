@@ -85,13 +85,10 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/contact">Contact us</Link>
-              </li>
-              <li>
                 <Link to="/">Home</Link>
               </li>
               <li>
-                <Link to="/favorite">Favorite</Link>
+                <Link to="/favourites">Favourites</Link>
               </li>
               <li>
                 {!(user == null) ? (

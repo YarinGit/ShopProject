@@ -70,7 +70,7 @@ const ManagerPage = () => {
       addProductCategoryInput,
       addProductDescriptionInput,
       addProductImageInput,
-      addProductPriceInput)
+      addProductPriceInput);
   }
   const handleButtonAddManager = ()=>{
     setAdmin(addManagerInput.toLowerCase())
@@ -88,12 +88,16 @@ const ManagerPage = () => {
     return await getAllProdacts()
   }
 
-  const handleSerchForDeletefunction = (e)=>{
+  const handleDeleteForDeletefunction = (e)=>{
     setSerchForDeleteInput(e.target.value);
   }
-  const handleSerchForDeleteButton=()=>{
-    console.log(serchForDeleteInput);
-    removeProduct(serchForDeleteInput)
+  const handleDeleteForDeleteButton=()=>{
+    console.log(serchForDeleteInput-1);
+    if (serchForDeleteInput-1 <0|| serchForDeleteInput-1>=productsArr.length) {
+      alert("Product dosnt exist");
+      return
+    }
+    removeProduct(serchForDeleteInput-1)
   }
 
   return (
@@ -102,7 +106,7 @@ const ManagerPage = () => {
         <div className="isTrue">
           <div className="Manager">
             <h3>Add & Delete Manager</h3>
-            <input type="text" onChange={handleInputAddManagerChange} value={addManagerInput}/>
+            <Input type="text" onChange={handleInputAddManagerChange} value={addManagerInput}/>
             <button onClick={handleButtonAddManager} >Add manager</button>
             <hr/>
             {allManagers.map((item, index)=> <ManagrtRow email={item} deleteFunction={onManagerDeleted} key={index}/>)}
@@ -114,20 +118,15 @@ const ManagerPage = () => {
 
             <h3>Add product</h3>
 
-            <h4>Title:</h4>
-            <input value={addProductTitleInput} type="text" onChange={handleAddProductTitleInput} />
+            <Input placeholder="Title:" value={addProductTitleInput} type="text" onChange={handleAddProductTitleInput} />
 
-            <h4>Category:</h4>
-            <input value={addProductCategoryInput} type="text" onChange={handleAddProduCtategoryInput} />
+            <Input placeholder="Category:" value={addProductCategoryInput} type="text" onChange={handleAddProduCtategoryInput} />
 
-            <h4>Description:</h4>
-            <input value={addProductDescriptionInput} type="text" onChange={handleAddProduDescriptionInput} />
+            <Input placeholder="Description:" value={addProductDescriptionInput} type="text" onChange={handleAddProduDescriptionInput} />
 
-            <h4>Image:</h4>
-            <input value={addProductImageInput} type="text" onChange={handleAddProduImageInput} />
+            <Input placeholder="Image:" value={addProductImageInput} type="text" onChange={handleAddProduImageInput} />
 
-            <h4>Price:</h4>
-            <input value={addProductPriceInput} type="number" onChange={handleAddProduPriceInput} />
+            <Input placeholder="Price:" value={addProductPriceInput} type="number" onChange={handleAddProduPriceInput} />
 
             <button onClick={handleAddProductButton} >Add Product</button>
 
@@ -136,8 +135,8 @@ const ManagerPage = () => {
                 console.log("data",data)})}} >print Products</button>
 
             <h3>Delete product</h3>
-            <Input type="text" name="serchForDelete" onChange={handleSerchForDeletefunction} value={serchForDeleteInput} placeholder="Serch by ID" />
-            <button onClick={handleSerchForDeleteButton} >Serch</button>
+            <Input type="text" name="DeleteForDelete" onChange={handleDeleteForDeletefunction} value={serchForDeleteInput} placeholder="Delete by ID" />
+            <button onClick={handleDeleteForDeleteButton} >Delete</button>
           </div>
         </div>
       ) : (

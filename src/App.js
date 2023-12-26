@@ -6,11 +6,10 @@ import Cart from "./components/shoping_cart/pages/cart/Cart";
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { ShopContext, ShopContextProvider } from "./components/shoping_cart/context/ShopContext";
-import { auth, getAllProdacts, getSnap } from "./firebaseShop";
-import ContactUs from "./components/contactUs/ContactUs";
-import Favorite from "./components/favorite/Favorite";
+import { PUT_ALL_DATA_FROM_API_TO_FIREBASE, auth, getAllProdacts, getSnap } from "./firebaseShop";
 import ManagerPage from "./components/managerPage/ManagerPage";
 import { onAuthStateChanged } from "firebase/auth";
+import Favourites from "./components/favorite/Favourites";
 
 // api 1 - https://dummyjson.com/products/search?q=phone
 // api 2 - https://fakestoreapi.com/products
@@ -51,7 +50,7 @@ export const userContext = createContext();
     return newCategoriesList;
   };
   // ------------------------------------------------------------------------------------------------------------------------------------
-  const [productsArr, setProductsArr] = useState([{title:"1",image:"11", description:"111"},{title:"2",image:"22", description:"222"},{title:"3",image:"33", description:"333"},]);
+  const [productsArr, setProductsArr] = useState([]);
   const [categoriesList, setCategoriesList] = useState([]);
   const [user, setUser] = useState({});
  
@@ -65,23 +64,27 @@ export const userContext = createContext();
 
   useEffect(() => {
     // api get products
-    const getData = async () => {
+    let tempData = [];
+    const getDataFromApi = async () => {
       let {data} = await axios.get("https://fakestoreapi.com/products");
-      const dataFromFirebase = await getAllProdacts()
-      let temp = [...data, ...dataFromFirebase];
-      data = temp;
-      console.log("data -> ", data);
-      console.log("dataFromFirebase -> ", dataFromFirebase);
-      // for (let i = 0; i < dataFromFirebase.length; i++) {
-      //   data.push({...dataFromFirebase[i]})
-      // }
+      // await PUT_ALL_DATA_FROM_API_TO_FIREBASE(data)
+      tempData = data;
+      console.log("API data -> ", data);
       for (let i = 0; i < data.length; i++) { data[i].id = i+1;}
-      console.log("data - ", data);
+      console.log("API data - ", data);
       setCategoriesList(defineCategoriesList(data))
-      // setProductsArr({...data, ...productsArr});
       setProductsArr(data);
     };
-    getData();
+    getDataFromApi();
+
+    const getDataFromFirebase = async () => {
+      const data = await getAllProdacts()
+      console.log("Firebase data -> ", data);
+      for (let i = 0; i < data.length; i++) { data[i].id = i+1;}
+      setCategoriesList(defineCategoriesList(data))
+      setProductsArr(data);
+    };
+    getDataFromFirebase();
   }, []);
 
   return (
@@ -94,8 +97,7 @@ export const userContext = createContext();
             <Routes>
               <Route path="/"element={<Shop categoriesList={categoriesList} />}/>
               <Route path="/cart" element={<Cart />} />
-              <Route path="/contact" element={<ContactUs />} />
-              <Route path="/favorite" element={<Favorite />} />
+              <Route path="/favourites" element={<Favourites />} />
               <Route path="/managerPage" element={<ManagerPage />} />
             </Routes>
           </Router>
