@@ -64,18 +64,18 @@ export const userContext = createContext();
 
   useEffect(() => {
     // api get products
-    let tempData = [];
-    const getDataFromApi = async () => {
-      let {data} = await axios.get("https://fakestoreapi.com/products");
-      // await PUT_ALL_DATA_FROM_API_TO_FIREBASE(data)
-      tempData = data;
-      console.log("API data -> ", data);
-      for (let i = 0; i < data.length; i++) { data[i].id = i+1;}
-      console.log("API data - ", data);
-      setCategoriesList(defineCategoriesList(data))
-      setProductsArr(data);
-    };
-    getDataFromApi();
+    // let tempData = [];
+    // const getDataFromApi = async () => {
+    //   let {data} = await axios.get("https://fakestoreapi.com/products");
+    //   // await PUT_ALL_DATA_FROM_API_TO_FIREBASE(data)
+    //   tempData = data;
+    //   console.log("API data -> ", data);
+    //   for (let i = 0; i < data.length; i++) { data[i].id = i+1;}
+    //   console.log("API data - ", data);
+    //   setCategoriesList(defineCategoriesList(data))
+    //   setProductsArr(data);
+    // };
+    // getDataFromApi();
 
     const getDataFromFirebase = async () => {
       const data = await getAllProdacts()

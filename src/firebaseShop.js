@@ -94,7 +94,7 @@ const firebaseConfig = {
 
 export const addProduct=async(title,category,description,image,price)=>{
   try {
-    // price = Number(price);
+    price = Number(price);
     let prevProductsArray = await getAllProdacts();
     let newId = (prevProductsArray.length != null)?prevProductsArray.id + 1 : 1 ;
     console.log("prevProductsArray -> ", prevProductsArray, "type -> ",typeof(prevProductsArray));
