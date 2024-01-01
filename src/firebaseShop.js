@@ -11,7 +11,6 @@ import {
   signOut,signInWithEmailAndPassword,
   onAuthStateChanged, 
  } from "firebase/auth";
-import { useState, useEffect } from "react";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCnIeACiMNfCOLuIG0mQ581wkfmrEUmmRM",
@@ -96,14 +95,15 @@ export const addProduct=async(title,category,description,image,price)=>{
   try {
     price = Number(price);
     let prevProductsArray = await getAllProdacts();
-    let newId = (prevProductsArray.length != null)?prevProductsArray.id + 1 : 1 ;
+    let newId = (prevProductsArray[prevProductsArray.length-1]?.id >= 1 && prevProductsArray.length >= 1)?Number(prevProductsArray[prevProductsArray.length-1]?.id) + 1 : 1 ;
+    console.log("newId", newId);
     console.log("prevProductsArray -> ", prevProductsArray, "type -> ",typeof(prevProductsArray));
     prevProductsArray.push({title:title, category:category, description:description, image:image, price:price, id:newId})
     const productDocRef = productsRef;
     console.log("productDocRef -> ",productDocRef);
     console.log("prevProductsArray -> ",prevProductsArray, "type -> ", typeof(prevProductsArray));
     setDoc(productDocRef, { products: prevProductsArray }); 
-    alert(title + " -> is added")
+    // alert(title + " -> is added")
   } catch (error) {
     alert(error.message)
     console.log(error.message)}
@@ -130,14 +130,17 @@ export const updateCart=(cartItems)=>{
 
 export const getCartOfCurrentUser = async(UID)=>{
   // this function gets the cart from the database when the user change
+  //TODO: לבדוק כאן אם המוצר קיים עדיין בחנות ואם לא אז להוציא אותו מהעגלה
+  
   let cart = {};
   const carts = await getDocs(cartsColRef);
   try {
-    
+    // משיג את העגלה הנוכחית
     for (const doc of carts.docs) {
       console.log("doc -> ", doc);
       let currentDoc = doc.data();
       if (doc.id === UID) { cart = currentDoc.items; }
+
     }
   } catch (error) {
     console.log(error.message);
@@ -148,8 +151,10 @@ export const getCartOfCurrentUser = async(UID)=>{
   let keysOfCart = Object.keys(cart);
   console.log("keysOfCart.length", keysOfCart.length);
   let products = await getAllProdacts();
-
+  console.log("products -> ", products);
+  // keysOfCart = איזה מוצרים יש בעגלה
   for (let i = 0; i < keysOfCart.length; i++) {
+    //TODO: לעשות פה שירוץ ובדוק אם המוצר קיים בעגלה ואם לא אז למחוק אותו
     let isExist = false;
     console.log("iiiii -> ", i);
     console.log("products[cart.id] -> ", keysOfCart[i], cart[keysOfCart[i]]);
