@@ -5,7 +5,7 @@ import Shop from "./components/shoping_cart/pages/shop/Shop";
 import Cart from "./components/shoping_cart/pages/cart/Cart";
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { ShopContext, ShopContextProvider } from "./components/shoping_cart/context/ShopContext";
+import { ShopContextProvider } from "./components/shoping_cart/context/ShopContext";
 import { PUT_ALL_DATA_FROM_API_TO_FIREBASE, auth, getAllProdacts, getSnap } from "./firebaseShop";
 import ManagerPage from "./components/managerPage/ManagerPage";
 import { onAuthStateChanged } from "firebase/auth";
@@ -15,7 +15,6 @@ import Favourites from "./components/favorite/Favourites";
 // api 2 - https://fakestoreapi.com/products
 // api 3 - https://api.storerestapi.com/products
 // api 4 - https://api.escuelajs.co/api/v1/products
-
 
 export const productConext = createContext();
 export const userContext = createContext();
@@ -38,15 +37,10 @@ export const userContext = createContext();
         categoriesList.push(currentCategory);
       }
     }
-    // console.log("categoriesList - ", categoriesList);
-
     let newCategoriesList = [];
     categoriesList.map((item) => {
       newCategoriesList.push({ value: item, label: item });
     });
-
-    // console.log("newCategoriesList - ", newCategoriesList);
-
     return newCategoriesList;
   };
   // ------------------------------------------------------------------------------------------------------------------------------------
@@ -80,7 +74,7 @@ export const userContext = createContext();
     const getDataFromFirebase = async () => {
       const data = await getAllProdacts()
       console.log("Firebase data -> ", data);
-      for (let i = 0; i < data.length; i++) { data[i].id = i+1;}
+      // for (let i = 0; i < data.length; i++) { data[i].id = i+1;}
       setCategoriesList(defineCategoriesList(data))
       setProductsArr(data);
     };

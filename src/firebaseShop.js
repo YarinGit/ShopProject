@@ -109,17 +109,18 @@ export const addProduct=async(title,category,description,image,price)=>{
     console.log(error.message)}
     }
 
-export const removeProduct=async(id)=>{
+export const removeProduct=async(placeInArr)=>{
   // להשלים פה הורדת מוצר ולעשות רשימה של כל המוצרים כמו שיש של כל המנהלים
   // לעשות גם מחיקה של יוזרים בדף המנהל
   try {
     //! לבדוק
     let prevProductsArray = await getAllProdacts();
-    console.log("prevProductsArray[id] -> ", prevProductsArray[id]);
-    prevProductsArray.splice(id, 1);
+    let deletedProduct = prevProductsArray[placeInArr];
+    console.log("prevProductsArray[placeInArr] -> ", prevProductsArray[placeInArr]);
+    prevProductsArray.splice(placeInArr, 1);
     const productDocRef = productsRef;
     setDoc(productDocRef, { products: prevProductsArray }); 
-    alert("Product nunber: "+(id+1)+" is removed")
+    alert("Product: "+(deletedProduct.title)+" is removed")
   } catch (error) {console.log(error.message)}
     }
 
@@ -153,17 +154,15 @@ export const getCartOfCurrentUser = async(UID)=>{
   let products = await getAllProdacts();
   console.log("products -> ", products);
   // keysOfCart = איזה מוצרים יש בעגלה
+
+
   for (let i = 0; i < keysOfCart.length; i++) {
     //TODO: לעשות פה שירוץ ובדוק אם המוצר קיים בעגלה ואם לא אז למחוק אותו
     let isExist = false;
-    console.log("iiiii -> ", i);
-    console.log("products[cart.id] -> ", keysOfCart[i], cart[keysOfCart[i]]);
-    if (products[cart[keysOfCart[i]]] == null) {
-      console.log("cart.id", cart.id);
+    console.log(" keysOfCart[i], cart[keysOfCart[i]] -> ", keysOfCart[i], cart[keysOfCart[i]]);
+    if (cart[keysOfCart[i]] == null) {
       console.log("true true true ");
     }
-
-
 
     if (i<cart.length) {
       if (products.id == cart.id) {

@@ -87,17 +87,24 @@ const ManagerPage = () => {
   const handelePrintUserBtn = async(arr) => {
     return await getAllProdacts()
   }
-
   const handleDeleteForDeletefunction = (e)=>{
     setSerchForDeleteInput(e.target.value);
   }
   const handleDeleteForDeleteButton=()=>{
-    console.log(serchForDeleteInput-1);
-    if (serchForDeleteInput-1 <0|| serchForDeleteInput-1>=productsArr.length) {
+    console.log(serchForDeleteInput);
+    let idOfProductToDelete = 0;
+    for (let i = 0; i < productsArr.length; i++) {
+      if (productsArr[i].id == serchForDeleteInput) {
+        idOfProductToDelete = i;
+        break;
+      }
+    }
+    console.log("idOfProductToDelete -> ", idOfProductToDelete);
+    if (idOfProductToDelete <= 0) {
       alert("Product dosnt exist");
       return
     }
-    removeProduct(serchForDeleteInput-1)
+    removeProduct(idOfProductToDelete)
   }
 
   return (
