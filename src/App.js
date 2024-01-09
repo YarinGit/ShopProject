@@ -6,7 +6,7 @@ import Cart from "./components/shoping_cart/pages/cart/Cart";
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { ShopContextProvider } from "./components/shoping_cart/context/ShopContext";
-import { PUT_ALL_DATA_FROM_API_TO_FIREBASE, auth, getAllProdacts, getSnap } from "./firebaseShop";
+import { PUT_ALL_DATA_FROM_API_TO_FIREBASE, auth, getAllProdacts, getAllProdactsToObject, getSnap } from "./firebaseShop";
 import ManagerPage from "./components/managerPage/ManagerPage";
 import { onAuthStateChanged } from "firebase/auth";
 import Favourites from "./components/favorite/Favourites";
@@ -74,7 +74,6 @@ export const userContext = createContext();
     const getDataFromFirebase = async () => {
       const data = await getAllProdacts()
       console.log("Firebase data -> ", data);
-      // for (let i = 0; i < data.length; i++) { data[i].id = i+1;}
       setCategoriesList(defineCategoriesList(data))
       setProductsArr(data);
     };
@@ -83,6 +82,10 @@ export const userContext = createContext();
 
   return (
     <div className="container">
+      <button onClick={()=>{
+        getAllProdactsToObject()
+      }} >press hrhrhrhr</button>
+
       <productConext.Provider value={{productsArr, setProductsArr}}>
         <ShopContextProvider>
         <userContext.Provider value={{ user, setUser }}>

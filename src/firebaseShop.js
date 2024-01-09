@@ -91,19 +91,57 @@ const firebaseConfig = {
     return {}
   }
 
+  export const getAllProdactsToObject = async()=>{
+    try {
+    const snapshot = await getDoc(productsRef);
+    let data = {};
+    let a = snapshot.data()
+    console.log("snapshot", a.products);
+    for (let i = 0; i < a.products.length; i++) {
+      data[a.products[i].id] = a.products[i];
+    }
+    console.log("data ->", data);
+    return data;
+      
+    } catch (error) {console.log(error.message)}
+    return {}
+  }
+
+/// befor oject
+  // export const addProduct=async(title,category,description,image,price)=>{
+  //   try {
+  //     price = Number(price);
+  //     let prevProductsArray = await getAllProdacts();
+  //     let newId = (prevProductsArray[prevProductsArray.length-1]?.id >= 1 && prevProductsArray.length >= 1)?Number(prevProductsArray[prevProductsArray.length-1]?.id) + 1 : 1 ;
+  //     console.log("newId", newId);
+  //     console.log("prevProductsArray -> ", prevProductsArray, "type -> ",typeof(prevProductsArray));
+  //     prevProductsArray.push({title:title, category:category, description:description, image:image, price:price, id:newId})
+  //     const productDocRef = productsRef;
+  //     console.log("productDocRef -> ",productDocRef);
+  //     console.log("prevProductsArray -> ",prevProductsArray, "type -> ", typeof(prevProductsArray));
+  //     setDoc(productDocRef, { products: prevProductsArray }); 
+  //     // alert(title + " -> is added")
+  //   } catch (error) {
+  //     alert(error.message)
+  //     console.log(error.message)}
+  //     }
+  
+
+/// after oject
 export const addProduct=async(title,category,description,image,price)=>{
+  //TODO: להפוך את זה שיחזיר אובייקט
   try {
     price = Number(price);
     let prevProductsArray = await getAllProdacts();
     let newId = (prevProductsArray[prevProductsArray.length-1]?.id >= 1 && prevProductsArray.length >= 1)?Number(prevProductsArray[prevProductsArray.length-1]?.id) + 1 : 1 ;
     console.log("newId", newId);
     console.log("prevProductsArray -> ", prevProductsArray, "type -> ",typeof(prevProductsArray));
-    prevProductsArray.push({title:title, category:category, description:description, image:image, price:price, id:newId})
+    prevProductsArray.push({title:title, category:category, description:description, image:image, price:price})
     const productDocRef = productsRef;
     console.log("productDocRef -> ",productDocRef);
     console.log("prevProductsArray -> ",prevProductsArray, "type -> ", typeof(prevProductsArray));
     setDoc(productDocRef, { products: prevProductsArray }); 
-    // alert(title + " -> is added")
+    alert(title + " -> is added")
   } catch (error) {
     alert(error.message)
     console.log(error.message)}
@@ -241,3 +279,6 @@ export const getCartOfCurrentUser = async(UID)=>{
 
         } catch (error) { console.log(error.message) }
   }
+
+
+
