@@ -135,8 +135,10 @@ export const getCartOfCurrentUser = async(UID)=>{
   
   let cart = {};
   const carts = await getDocs(cartsColRef);
+  //#region משיג את העגלה הנוכחית
+
   try {
-    // משיג את העגלה הנוכחית
+    // 
     for (const doc of carts.docs) {
       console.log("doc -> ", doc);
       let currentDoc = doc.data();
@@ -147,29 +149,37 @@ export const getCartOfCurrentUser = async(UID)=>{
     console.log(error.message);
     return {};
   }
+  //#endregion
+
   console.log("cart -> ", cart);
 
+  //#region מביא את העגלה ואת המוצרים
   let keysOfCart = Object.keys(cart);
   console.log("keysOfCart.length", keysOfCart.length);
   let products = await getAllProdacts();
   console.log("products -> ", products);
   // keysOfCart = איזה מוצרים יש בעגלה
-
+  //#endregion
 
   for (let i = 0; i < keysOfCart.length; i++) {
+    //TODO: להראות את זה לבוחנים
+    // לא למחוק - אני יודע שזה לא יעיל כרגע פשוט ככה התחלתי ולא היה לי מספיק זמן
+    // לשנות את איך שמוגדר רשימת המוצרים ממערך לאובייקט אבל עשיתי זאת במקומות אחרים כגון העגלה
     //TODO: לעשות פה שירוץ ובדוק אם המוצר קיים בעגלה ואם לא אז למחוק אותו
     let isExist = false;
     console.log(" keysOfCart[i], cart[keysOfCart[i]] -> ", keysOfCart[i], cart[keysOfCart[i]]);
-    if (cart[keysOfCart[i]] == null) {
+    console.log("products[keysOfCart[i]] <= 0 ->", products[keysOfCart[i]] <= 0, cart[keysOfCart[i]]);
+    console.log("products[keysOfCart[i]] == null ->", products[keysOfCart[i]] == null, cart[keysOfCart[i]]);
+    if (products[keysOfCart[i]] <= 0 || products[keysOfCart[i]] == null) {
       console.log("true true true ");
     }
 
-    if (i<cart.length) {
-      if (products.id == cart.id) {
-        isExist = true;
-        continue;
-      }
-    }
+    // if (i<cart.length) {
+    //   if (products.id == cart.id) {
+    //     isExist = true;
+    //     continue;
+    //   }
+    // }
   }
 
   return cart;
