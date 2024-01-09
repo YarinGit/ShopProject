@@ -170,6 +170,7 @@ export const getCartOfCurrentUser = async(UID)=>{
     console.log(" keysOfCart[i], cart[keysOfCart[i]] -> ", keysOfCart[i], cart[keysOfCart[i]]);
     console.log("products[keysOfCart[i]] <= 0 ->", products[keysOfCart[i]] <= 0, cart[keysOfCart[i]]);
     console.log("products[keysOfCart[i]] == null ->", products[keysOfCart[i]] == null, cart[keysOfCart[i]]);
+    
     if (products[keysOfCart[i]] <= 0 || products[keysOfCart[i]] == null) {
       console.log("true true true ");
     }
