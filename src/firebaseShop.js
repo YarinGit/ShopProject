@@ -94,12 +94,11 @@ const firebaseConfig = {
   export const getAllProdactsToObject = async()=>{
     try {
     const snapshot = await getDoc(productsRef);
-    let data = {};
-    let a = snapshot.data()
-    console.log("snapshot", a.products);
-    for (let i = 0; i < a.products.length; i++) {
-      data[a.products[i].id] = a.products[i];
-    }
+    // let data = {};
+    let data = snapshot.data().products
+    // for (let i = 0; i < a.products.length; i++) {
+    //   data[a.products[i]] = a.products[i];
+    // }
     console.log("data ->", data);
     return data;
       
@@ -130,36 +129,43 @@ const firebaseConfig = {
 /// after oject
 export const addProduct=async(title,category,description,image,price)=>{
   //TODO: להפוך את זה שיחזיר אובייקט
+  //TODO: כרגע הפונקציה מושכת את המוצרים בצורה של אובייקטים, להתאים אותה שישים בפיירבייס את המידע בצורה הזאת גם
   try {
     price = Number(price);
-    let prevProductsArray = await getAllProdacts();
-    let newId = (prevProductsArray[prevProductsArray.length-1]?.id >= 1 && prevProductsArray.length >= 1)?Number(prevProductsArray[prevProductsArray.length-1]?.id) + 1 : 1 ;
-    console.log("newId", newId);
-    console.log("prevProductsArray -> ", prevProductsArray, "type -> ",typeof(prevProductsArray));
-    prevProductsArray.push({title:title, category:category, description:description, image:image, price:price})
+    // Object.entries(myObject)
+
+    let prevProductsObject = await getAllProdactsToObject();
+    let prevProductsArray = Object.keys(prevProductsObject);
+    
+    console.log("prevProductsObject -> ", prevProductsObject, prevProductsArray.length, prevProductsArray);
+    let newId = (prevProductsArray[prevProductsArray.length-1] >= 1 && prevProductsArray.length >= 1)?Number(prevProductsArray[prevProductsArray.length-1]) + 1 : 1 ;
+    prevProductsObject[newId.toString()] = ({title:title, category:category, description:description, image:image, price:price})
     const productDocRef = productsRef;
-    console.log("productDocRef -> ",productDocRef);
-    console.log("prevProductsArray -> ",prevProductsArray, "type -> ", typeof(prevProductsArray));
-    setDoc(productDocRef, { products: prevProductsArray }); 
+    setDoc(productDocRef, { products: prevProductsObject }); 
     alert(title + " -> is added")
   } catch (error) {
     alert(error.message)
     console.log(error.message)}
     }
 
-export const removeProduct=async(placeInArr)=>{
-  // להשלים פה הורדת מוצר ולעשות רשימה של כל המוצרים כמו שיש של כל המנהלים
-  // לעשות גם מחיקה של יוזרים בדף המנהל
+export const removeProduct=async(id)=>{
   try {
-    //! לבדוק
-    let prevProductsArray = await getAllProdacts();
-    let deletedProduct = prevProductsArray[placeInArr];
-    console.log("prevProductsArray[placeInArr] -> ", prevProductsArray[placeInArr]);
-    prevProductsArray.splice(placeInArr, 1);
-    const productDocRef = productsRef;
-    setDoc(productDocRef, { products: prevProductsArray }); 
+    let prevProductsObject = await getAllProdactsToObject();
+    let prevProductsArray = Object.keys(prevProductsObject);
+    if (!(prevProductsArray.includes(id))) {
+      alert("Product " + id + " dosnt exist");
+      return;
+    }
+
+    let deletedProduct = prevProductsObject[id];
+    console.log("prevProductsObject[id] -> ", prevProductsObject[id]);
+    delete prevProductsObject[id];
+    setDoc(productsRef, { products: prevProductsObject }); 
     alert("Product: "+(deletedProduct.title)+" is removed")
-  } catch (error) {console.log(error.message)}
+  } catch (error) {
+    console.log(error.message);
+    alert(error.message);
+  }
     }
 
 export const updateCart=(cartItems)=>{

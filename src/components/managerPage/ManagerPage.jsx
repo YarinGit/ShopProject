@@ -92,19 +92,19 @@ const ManagerPage = () => {
   }
   const handleDeleteForDeleteButton=()=>{
     console.log(serchForDeleteInput);
-    let idOfProductToDelete = 0;
-    for (let i = 0; i < productsArr.length; i++) {
-      if (productsArr[i].id == serchForDeleteInput) {
-        idOfProductToDelete = i;
-        break;
-      }
-    }
-    console.log("idOfProductToDelete -> ", idOfProductToDelete);
-    if (idOfProductToDelete <= 0) {
+    // let idOfProductToDelete = 0;
+    // for (let i = 0; i < productsArr.length; i++) {
+    //   if (productsArr[i].id == serchForDeleteInput) {
+    //     idOfProductToDelete = i;
+    //     break;
+    //   }
+    // }
+    // console.log("idOfProductToDelete -> ", idOfProductToDelete);
+    if (serchForDeleteInput <= 0) {
       alert("Product dosnt exist");
       return
     }
-    removeProduct(idOfProductToDelete)
+    removeProduct(serchForDeleteInput)
   }
 
   return (
