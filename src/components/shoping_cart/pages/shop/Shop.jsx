@@ -4,7 +4,6 @@ import { productConext } from '../../../../App';
 import Select from 'react-select';
 import "./shop.css";
 
-
 const Shop = (categoriesList) => {
   console.log("categoriesList.categoriesList in shop", categoriesList.categoriesList);
   const categoriesListInShop = [...categoriesList.categoriesList];

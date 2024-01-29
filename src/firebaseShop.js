@@ -77,28 +77,27 @@ const firebaseConfig = {
   }
 
   export const getAllProdacts = async()=>{
+    // This function get the products from Firebase as object of objects, and return array of objects 
     try {
     const snapshot = await getDoc(productsRef);
     let data = [];
-    let a = snapshot.data()
-    console.log("snapshot", a.products);
-    for (let i = 0; i < a.products.length; i++) {
-      data.push(a.products[i]);
+    let temp = snapshot.data().products
+    let tempKeys = Object.keys(temp);
+    console.log("snapshot", temp);
+    for (let i = 0; i < tempKeys.length; i++) {
+      data.push(temp[tempKeys[i]]);
     }
     return data;
-      
+
     } catch (error) {console.log(error.message)}
     return {}
   }
 
   export const getAllProdactsToObject = async()=>{
+    // This function get the products from Firebase as object of objects, and return object of objects 
     try {
     const snapshot = await getDoc(productsRef);
-    // let data = {};
     let data = snapshot.data().products
-    // for (let i = 0; i < a.products.length; i++) {
-    //   data[a.products[i]] = a.products[i];
-    // }
     console.log("data ->", data);
     return data;
       
@@ -124,7 +123,6 @@ const firebaseConfig = {
   //     alert(error.message)
   //     console.log(error.message)}
   //     }
-  
 
 /// after oject
 export const addProduct=async(title,category,description,image,price)=>{
@@ -288,3 +286,27 @@ export const getCartOfCurrentUser = async(UID)=>{
 
 
 
+
+
+
+
+  /*
+  הפונקציה של משיכת המוצרים מהפייר בייס כמו שהיה בהתחלה במערך array
+    export const getAllProdacts = async()=>{
+    try {
+    const snapshot = await getDoc(productsRef);
+    let data = [];
+    let a = snapshot.data()
+    console.log("snapshot", a.products);
+    for (let i = 0; i < a.products.length; i++) {
+      data.push(a.products[i]);
+    }
+    return data;
+      
+    } catch (error) {console.log(error.message)}
+    return {}
+  }
+
+
+  
+  */
