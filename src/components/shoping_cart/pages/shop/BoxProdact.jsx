@@ -26,8 +26,7 @@ const BoxProdact = ({ title, description, image, price, id }) => {
 
       <div className="buttom">
         <span className="price">{price} &#8362;</span>
-        <div
-          className="btn"
+        <div className="btn"
           onClick={(e) => {
             e.preventDefault();
             addToCart(id);

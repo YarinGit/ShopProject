@@ -87,6 +87,7 @@ const firebaseConfig = {
     for (let i = 0; i < tempKeys.length; i++) {
       data.push(temp[tempKeys[i]]);
     }
+    console.log("data in getAllProdacts -> ", data);
     return data;
 
     } catch (error) {console.log(error.message)}
@@ -105,39 +106,19 @@ const firebaseConfig = {
     return {}
   }
 
-/// befor oject
-  // export const addProduct=async(title,category,description,image,price)=>{
-  //   try {
-  //     price = Number(price);
-  //     let prevProductsArray = await getAllProdacts();
-  //     let newId = (prevProductsArray[prevProductsArray.length-1]?.id >= 1 && prevProductsArray.length >= 1)?Number(prevProductsArray[prevProductsArray.length-1]?.id) + 1 : 1 ;
-  //     console.log("newId", newId);
-  //     console.log("prevProductsArray -> ", prevProductsArray, "type -> ",typeof(prevProductsArray));
-  //     prevProductsArray.push({title:title, category:category, description:description, image:image, price:price, id:newId})
-  //     const productDocRef = productsRef;
-  //     console.log("productDocRef -> ",productDocRef);
-  //     console.log("prevProductsArray -> ",prevProductsArray, "type -> ", typeof(prevProductsArray));
-  //     setDoc(productDocRef, { products: prevProductsArray }); 
-  //     // alert(title + " -> is added")
-  //   } catch (error) {
-  //     alert(error.message)
-  //     console.log(error.message)}
-  //     }
-
 /// after oject
 export const addProduct=async(title,category,description,image,price)=>{
   //TODO: להפוך את זה שיחזיר אובייקט
   //TODO: כרגע הפונקציה מושכת את המוצרים בצורה של אובייקטים, להתאים אותה שישים בפיירבייס את המידע בצורה הזאת גם
   try {
     price = Number(price);
-    // Object.entries(myObject)
 
     let prevProductsObject = await getAllProdactsToObject();
     let prevProductsArray = Object.keys(prevProductsObject);
     
     console.log("prevProductsObject -> ", prevProductsObject, prevProductsArray.length, prevProductsArray);
     let newId = (prevProductsArray[prevProductsArray.length-1] >= 1 && prevProductsArray.length >= 1)?Number(prevProductsArray[prevProductsArray.length-1]) + 1 : 1 ;
-    prevProductsObject[newId.toString()] = ({title:title, category:category, description:description, image:image, price:price})
+    prevProductsObject[newId.toString()] = ({title:title, category:category, description:description, image:image, price:price, id:newId})
     const productDocRef = productsRef;
     setDoc(productDocRef, { products: prevProductsObject }); 
     alert(title + " -> is added")
@@ -173,8 +154,6 @@ export const updateCart=(cartItems)=>{
 
 export const getCartOfCurrentUser = async(UID)=>{
   // this function gets the cart from the database when the user change
-  //TODO: לבדוק כאן אם המוצר קיים עדיין בחנות ואם לא אז להוציא אותו מהעגלה
-  
   let cart = {};
   const carts = await getDocs(cartsColRef);
   //#region משיג את העגלה הנוכחית
@@ -193,45 +172,26 @@ export const getCartOfCurrentUser = async(UID)=>{
   }
   //#endregion
 
-  console.log("cart -> ", cart);
-
   //#region מביא את העגלה ואת המוצרים
   let keysOfCart = Object.keys(cart);
   console.log("keysOfCart.length", keysOfCart.length);
-  let products = await getAllProdacts();
+  let products = await getAllProdactsToObject();
   console.log("products -> ", products);
   // keysOfCart = איזה מוצרים יש בעגלה
   //#endregion
 
+  // אם מוצר ספציפי לא קיים בעגלה אז הפור הזה מוחק אותו 
   for (let i = 0; i < keysOfCart.length; i++) {
-    //TODO: להראות את זה לבוחנים
-    // לא למחוק - אני יודע שזה לא יעיל כרגע פשוט ככה התחלתי ולא היה לי מספיק זמן
-    // לשנות את איך שמוגדר רשימת המוצרים ממערך לאובייקט אבל עשיתי זאת במקומות אחרים כגון העגלה
-    //TODO: לעשות פה שירוץ ובדוק אם המוצר קיים בעגלה ואם לא אז למחוק אותו
-    let isExist = false;
-    console.log(" keysOfCart[i], cart[keysOfCart[i]] -> ", keysOfCart[i], cart[keysOfCart[i]]);
-    console.log("products[keysOfCart[i]] <= 0 ->", products[keysOfCart[i]] <= 0, cart[keysOfCart[i]]);
-    console.log("products[keysOfCart[i]] == null ->", products[keysOfCart[i]] == null, cart[keysOfCart[i]]);
-    
     if (products[keysOfCart[i]] <= 0 || products[keysOfCart[i]] == null) {
-      console.log("true true true ");
+      delete cart[keysOfCart[i]];
+      updateCart(cart)
     }
-
-    // if (i<cart.length) {
-    //   if (products.id == cart.id) {
-    //     isExist = true;
-    //     continue;
-    //   }
-    // }
   }
-
   return cart;
 };
-
   //#endregion
   
   //#region Signing users up
-  
   export const signIn = (logInData, cartItems)=>{
     let {email, password} = logInData;
     createUserWithEmailAndPassword(auth, email, password)
@@ -285,8 +245,26 @@ export const getCartOfCurrentUser = async(UID)=>{
   }
 
 
+    // Object.entries(myObject)
 
-
+/// befor oject
+  // export const addProduct=async(title,category,description,image,price)=>{
+  //   try {
+  //     price = Number(price);
+  //     let prevProductsArray = await getAllProdacts();
+  //     let newId = (prevProductsArray[prevProductsArray.length-1]?.id >= 1 && prevProductsArray.length >= 1)?Number(prevProductsArray[prevProductsArray.length-1]?.id) + 1 : 1 ;
+  //     console.log("newId", newId);
+  //     console.log("prevProductsArray -> ", prevProductsArray, "type -> ",typeof(prevProductsArray));
+  //     prevProductsArray.push({title:title, category:category, description:description, image:image, price:price, id:newId})
+  //     const productDocRef = productsRef;
+  //     console.log("productDocRef -> ",productDocRef);
+  //     console.log("prevProductsArray -> ",prevProductsArray, "type -> ", typeof(prevProductsArray));
+  //     setDoc(productDocRef, { products: prevProductsArray }); 
+  //     // alert(title + " -> is added")
+  //   } catch (error) {
+  //     alert(error.message)
+  //     console.log(error.message)}
+  //     }
 
 
 

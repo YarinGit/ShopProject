@@ -18,15 +18,16 @@ const ManagerPage = () => {
   const { user } = useContext(userContext);
 
   // Determines if current user can be in manager page
-  // useEffect(()=>{
-  //   setIsManager(isCurrentUserManager());
-  // },[user])
-  // const isCurrentUserManager=()=>{
-  //   for (let i = 0; i < allManagers.length; i++) {
-  //     if(user?.email == allManagers[i])return true;
-  //   }
-  //     return false;
-  //   }
+  useEffect(()=>{
+    //TODO: לבדוק עם יעקב למה צריך כל פעם להיכנס ולצאת כדי להיכנס לעמוד של המנהל
+    setIsManager(isCurrentUserManager());
+  },[user])
+  const isCurrentUserManager=()=>{
+    for (let i = 0; i < allManagers.length; i++) {
+      if(user?.email == allManagers[i])return true;
+    }
+      return false;
+    }
   
   useEffect(() => {
     getAllManagersArr();
