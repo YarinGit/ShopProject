@@ -233,6 +233,16 @@ export const getCartOfCurrentUser = async(UID)=>{
   }
 //#endregion
 
+
+//#region Favourites
+
+
+// TODO: put in Favourites function
+
+
+//#endregion
+
+
   export const PUT_ALL_DATA_FROM_API_TO_FIREBASE=async(array)=>{
         //TODO: להשים את בפונקציה הזאת בהערה ולא למחוק כשאני מסיים
         try {

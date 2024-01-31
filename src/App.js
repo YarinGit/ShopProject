@@ -9,7 +9,8 @@ import { ShopContextProvider } from "./components/shoping_cart/context/ShopConte
 import { PUT_ALL_DATA_FROM_API_TO_FIREBASE, auth, getAllProdacts, getAllProdactsToObject, getSnap } from "./firebaseShop";
 import ManagerPage from "./components/managerPage/ManagerPage";
 import { onAuthStateChanged } from "firebase/auth";
-import Favourites from "./components/favorite/Favourites";
+import Favourites from "./components/shoping_cart/pages/favourites/Favourites";
+import { FavouritesContaxtProvider } from "./components/shoping_cart/pages/favourites/FavouritesContext";
 
 // api 1 - https://dummyjson.com/products/search?q=phone
 // api 2 - https://fakestoreapi.com/products
@@ -88,6 +89,7 @@ export const userContext = createContext();
 
       <productConext.Provider value={{productsArr, setProductsArr}}>
         <ShopContextProvider>
+          <FavouritesContaxtProvider>
         <userContext.Provider value={{ user, setUser }}>
           <Router>
             <Header />
@@ -99,6 +101,7 @@ export const userContext = createContext();
             </Routes>
           </Router>
           </userContext.Provider>
+          </FavouritesContaxtProvider>
         </ShopContextProvider>
       </productConext.Provider>
     </div>
